@@ -14,7 +14,7 @@ const chartOptions = ref({
   theme: {
     monochrome: {
       enabled: true,
-      color: '#0d9488'
+      color: '#5AB2FF'
     }
   },
   responsive: [
