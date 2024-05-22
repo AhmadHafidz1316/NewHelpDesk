@@ -54,7 +54,7 @@ const subject = ref('')
 
 const description = ref('')
 
-const files = ref()
+const files = ref<File[]>([])
 
 const { create, isLoading, isSuccess, ticket, message, errors } = useTickets()
 
@@ -154,10 +154,9 @@ onBeforeRouteLeave(() => {
         />
 
         <FileUpload
-          @change="(value) => (files = value)"
+          @change="(value) => (files.value = value)"
           label="Drop attachments here or click to browse"
           :errors="errors?.attachments"
-          :ref="files"
           :multiple="true"
         />
       </div>

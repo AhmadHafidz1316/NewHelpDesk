@@ -142,12 +142,6 @@ const router = createRouter({
           meta: { forAdmin: true }
         },
         {
-          path: 'newsletters',
-          name: 'DashboardNewsletters',
-          component: () => import('@/views/Admin/Newsletters.vue'),
-          meta: { forAdmin: true }
-        },
-        {
           path: 'canned-responses',
           name: 'DashboardCannedResponses',
           component: () => import('@/views/Manager/CannedResponses.vue')

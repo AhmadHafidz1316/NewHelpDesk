@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SearchPalette from '@/components/Common/SearchPalette.vue'
-import Logo from '@/components/Layout/Logo.vue'
+import Logo from '@/assets/fps-icon.svg'
 
 import {
   Disclosure,
@@ -150,7 +150,7 @@ whenever(
       <div class="flex h-16 justify-between">
         <div class="flex">
           <div class="flex flex-shrink-0 items-center">
-            <Logo class-names="w-10" />
+            <img :src="Logo" alt="Logo" class="h-8 w-auto">
           </div>
           <div class="hidden lg:ml-6 lg:flex lg:space-x-8">
             <router-link
