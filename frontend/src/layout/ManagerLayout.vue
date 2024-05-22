@@ -14,6 +14,8 @@ import {
   TransitionRoot
 } from '@headlessui/vue'
 
+import logo from '@/assets/fps-icon.svg'
+
 import EllipsisHorizontalIcon from '@heroicons/vue/24/outline/EllipsisHorizontalIcon'
 import CalendarIcon from '@heroicons/vue/24/outline/CalendarIcon'
 import XMarkIcon from '@heroicons/vue/24/outline/XMarkIcon'
@@ -57,7 +59,6 @@ const adminNavigation = [
   { name: 'Categories', to: 'DashboardCategories', icon: Squares2X2Icon },
   { name: 'FAQs', to: 'DashboardFaqs', icon: QuestionMarkCircleIcon },
   { name: 'Canned Responses', to: 'DashboardCannedResponses', icon: ChatBubbleLeftRightIcon },
-  { name: 'Newsletters', to: 'DashboardNewsletters', icon: EnvelopeIcon },
   { name: 'Tickets', to: 'DashboardTickets', icon: TicketIcon },
   { name: 'Profile', to: 'DashboardProfile', icon: UserCircleIcon },
   { name: 'Password', to: 'DashboardPassword', icon: KeyIcon },
@@ -230,8 +231,8 @@ onMounted(async () => {
     <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
       <div class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5">
         <div class="flex flex-shrink-0 items-center gap-1 px-4">
-          <Logo class-names="w-12" with-text />
         </div>
+        <img :src="logo" class="p-7" >
         <div class="mt-5 flex flex-grow flex-col">
           <nav class="flex-1 space-y-1 px-2 pb-4">
             <router-link
