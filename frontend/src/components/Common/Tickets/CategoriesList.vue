@@ -19,7 +19,7 @@ defineProps<{ categories: Category[] }>()
       >
         <p>{{ category.name }}</p>
         <p
-          class="inline-flex items-center rounded-full bg-teal-50 px-2.5 py-0.5 text-xs font-medium text-teal-800"
+          class="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-800"
         >
           {{ category.faqs_count }}
         </p>

@@ -19,7 +19,7 @@ withDefaults(
   <router-link :to="{ name: 'Home' }" class="flex items-center gap-1" :title="appTitle">
     <LottieAnimation :class="classNames" :animationData="LogoLottie" :loop="false" />
 
-    <p v-if="withText" class="text-3xl font-semibold text-teal-600">
+    <p v-if="withText" class="text-3xl font-semibold text-blue-600">
       {{ appTitle }}
     </p>
   </router-link>

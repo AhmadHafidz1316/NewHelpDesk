@@ -84,7 +84,7 @@ watch(
         :class="[
           errors?.length
             ? 'border-red-300 pr-10 text-red-900 focus:border-red-300 focus:ring-red-500'
-            : 'border-gray-300 text-gray-900 focus:border-teal-300 focus:ring-teal-500'
+            : 'border-gray-300 text-gray-900 focus:border-blue-300 focus:ring-blue-500'
         ]"
         class="w-full cursor-default rounded-md border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
         :displayValue="(item) => (item as Option)?.name ?? nullText"
@@ -119,7 +119,7 @@ watch(
             <li
               class="relative cursor-default select-none py-2 px-3 text-gray-700"
               :class="{
-                'bg-teal-600 text-white': active,
+                'bg-blue-600 text-white': active,
                 'text-gray-900': !active
               }"
             >
@@ -137,7 +137,7 @@ watch(
             <li
               class="relative cursor-default select-none py-2 pl-3 pr-9"
               :class="{
-                'bg-teal-600 text-white': active,
+                'bg-blue-600 text-white': active,
                 'text-gray-900': !active
               }"
             >
@@ -170,7 +170,7 @@ watch(
               <span
                 v-if="selected"
                 class="absolute inset-y-0 right-0 flex items-center pr-3"
-                :class="{ 'text-white': active, 'text-teal-600': !active }"
+                :class="{ 'text-white': active, 'text-blue-600': !active }"
               >
                 <CheckIcon class="h-5 w-5" />
               </span>

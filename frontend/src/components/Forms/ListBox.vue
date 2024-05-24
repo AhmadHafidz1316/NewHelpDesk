@@ -56,7 +56,7 @@ watch(
         :class="[
           errors?.length
             ? 'border-red-300 pr-10 text-red-900 focus:border-red-300 focus:ring-red-500'
-            : 'border-gray-300 text-gray-900 focus:border-teal-300 focus:ring-teal-500'
+            : 'border-gray-300 text-gray-900 focus:border-blue-300 focus:ring-blue-500'
         ]"
         class="relative w-full cursor-default rounded-md border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
       >
@@ -77,7 +77,7 @@ watch(
           <ListboxOption as="template" :value="null" v-slot="{ active }">
             <li
               :class="[
-                active ? 'bg-teal-600 text-white' : 'text-gray-900',
+                active ? 'bg-blue-600 text-white' : 'text-gray-900',
                 'relative cursor-default select-none py-2 pl-3 pr-9'
               ]"
             >
@@ -94,7 +94,7 @@ watch(
           >
             <li
               :class="[
-                active ? 'bg-teal-600 text-white' : 'text-gray-900',
+                active ? 'bg-blue-600 text-white' : 'text-gray-900',
                 'relative cursor-default select-none py-2 pl-3 pr-9'
               ]"
             >
@@ -105,7 +105,7 @@ watch(
               <span
                 v-if="selected"
                 :class="[
-                  active ? 'text-white' : 'text-teal-600',
+                  active ? 'text-white' : 'text-blue-600',
                   'absolute inset-y-0 right-0 flex items-center pr-4'
                 ]"
               >

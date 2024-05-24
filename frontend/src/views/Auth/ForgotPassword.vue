@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import FormInput from '@/components/Forms/FormInput.vue'
 import PrimaryButton from '@/components/Forms/PrimaryButton.vue'
-import Logo from '@/components/Layout/Logo.vue'
+import Logo from '@/assets/fps-icon.svg'
 
 import EnvelopeIcon from '@heroicons/vue/24/outline/EnvelopeIcon'
 import ArrowLeftIcon from '@heroicons/vue/24/outline/ArrowLeftIcon'
@@ -43,7 +43,7 @@ const onSubmit = async () => {
   <section class="mx-auto max-w-md justify-center">
     <div class="rounded-md border bg-white px-6 pt-6 pb-8 shadow">
       <header class="mb-6">
-        <Logo />
+        <img :src="Logo" alt="" class="w-full p-10" />
 
         <h2 class="text-center text-lg">Forgot your password?</h2>
       </header>
@@ -63,7 +63,7 @@ const onSubmit = async () => {
       </form>
 
       <div class="mt-8">
-        <router-link :to="{ name: 'Login' }" class="text-teal-600 hover:text-teal-800">
+        <router-link :to="{ name: 'Login' }" class="text-blue-600 hover:text-blue-800">
           <p class="flex items-center justify-center gap-1">
             <ArrowLeftIcon class="h-5 w-5" />
             Back to Login

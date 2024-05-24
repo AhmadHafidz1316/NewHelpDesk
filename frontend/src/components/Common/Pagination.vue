@@ -97,7 +97,7 @@ defineProps<{
               v-else
               :to="{ name: routeName, query: { page: link.label, ...query } }"
               :class="{
-                'z-10 border-teal-500 bg-teal-50 text-teal-600': link.active,
+                'z-10 border-blue-500 bg-blue-50 text-blue-600': link.active,
                 'border-gray-300 bg-white text-gray-500 hover:bg-gray-50': !link.active
               }"
               class="relative inline-flex items-center border px-4 py-2 text-sm font-medium"

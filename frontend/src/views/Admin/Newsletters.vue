@@ -203,7 +203,7 @@ onBeforeRouteUpdate(async (to, from) => {
           type="search"
           name="search"
           id="search"
-          class="block w-full rounded-md border-gray-300 pl-10 text-sm focus:border-teal-500 focus:ring-teal-500"
+          class="block w-full rounded-md border-gray-300 pl-10 text-sm focus:border-blue-500 focus:ring-blue-500"
           placeholder="Search"
         />
       </div>

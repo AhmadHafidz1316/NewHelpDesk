@@ -20,7 +20,7 @@ const { open } = useSearchPalette()
           >
             <span class="block">Welcome to </span>
             <span
-              class="block bg-gradient-to-r from-blue-400 to-teal-900 bg-clip-text pb-3 text-transparent"
+              class="block bg-gradient-to-r from-blue-400 to-blue-900 bg-clip-text pb-3 text-transparent"
             >
               our Help Desk
             </span>
@@ -31,7 +31,7 @@ const { open } = useSearchPalette()
           <div class="flex items-center justify-center gap-3 md:justify-start">
             <button
               @click="open"
-              class="inline-flex items-center justify-center gap-1 rounded-md border border-blue-600 px-4 py-3 font-medium text-blue-600 shadow-sm focus:outline-none focus:ring-2  sm:w-auto"
+              class="inline-flex items-center justify-center gap-1 rounded-md border border-blue-600 px-4 py-3 font-medium text-blue-600 shadow-sm focus:outline-none focus:ring-2 sm:w-auto"
             >
               <MagnifyingGlassIcon class="h-5 w-5" />
               <span>Search</span>

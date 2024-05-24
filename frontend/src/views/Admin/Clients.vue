@@ -151,9 +151,9 @@ const handleRestore = (client: Client) => {
   confirmationModalTitle.value = 'Restore Client'
   confirmationModalText.value = 'Are you sure you want to restore this client?'
   confirmationModalButtonText.value = 'Restore'
-  confirmationModalBackgroundColor.value = 'bg-teal-100'
-  confirmationModalButtonBackgroundColor.value = 'bg-teal-600 hover:bg-teal-700 focus:ring-teal-500'
-  confirmationModalColor.value = 'text-teal-600'
+  confirmationModalBackgroundColor.value = 'bg-blue-100'
+  confirmationModalButtonBackgroundColor.value = 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500'
+  confirmationModalColor.value = 'text-blue-600'
   confirmationModalIcon.value = InformationCircleIcon
   confirmationModalFunction.value = restoreClient
 }
@@ -322,7 +322,7 @@ onBeforeRouteUpdate(async (to, from) => {
             type="search"
             name="search"
             id="search"
-            class="block w-full rounded-md border-gray-300 pl-10 text-sm focus:border-teal-500 focus:ring-teal-500"
+            class="block w-full rounded-md border-gray-300 pl-10 text-sm focus:border-blue-500 focus:ring-blue-500"
             placeholder="Search"
           />
         </div>
@@ -331,7 +331,7 @@ onBeforeRouteUpdate(async (to, from) => {
       <button
         @click="filterPanelIsOpen = true"
         type="button"
-        class="relative -ml-px inline-flex items-center space-x-2 rounded-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+        class="relative -ml-px inline-flex items-center space-x-2 rounded-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
       >
         <AdjustmentsHorizontalIcon class="h-5 w-5 text-gray-400" />
         <span>Filter</span>
