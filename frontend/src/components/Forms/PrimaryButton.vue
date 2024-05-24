@@ -11,7 +11,7 @@ defineProps<{
     :disabled="loading"
     :type="type"
     :class="{ 'opacity-50': loading }"
-    class="items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+    class="items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
   >
     <div class="flex justify-center" v-if="loading">
       <svg

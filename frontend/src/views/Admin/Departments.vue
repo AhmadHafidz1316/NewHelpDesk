@@ -175,9 +175,9 @@ const handleRestore = (department: Department) => {
   confirmationModalTitle.value = 'Restore Department'
   confirmationModalText.value = 'Are you sure you want to restore this department?'
   confirmationModalButtonText.value = 'Restore'
-  confirmationModalBackgroundColor.value = 'bg-teal-100'
-  confirmationModalButtonBackgroundColor.value = 'bg-teal-600 hover:bg-teal-700 focus:ring-teal-500'
-  confirmationModalColor.value = 'text-teal-600'
+  confirmationModalBackgroundColor.value = 'bg-blue-100'
+  confirmationModalButtonBackgroundColor.value = 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500'
+  confirmationModalColor.value = 'text-blue-600'
   confirmationModalIcon.value = InformationCircleIcon
   confirmationModalFunction.value = restoreDepartment
 }
@@ -266,7 +266,7 @@ const restoreDepartment = async () => {
             type="search"
             name="search"
             id="search"
-            class="block w-full rounded-md border-gray-300 pl-10 text-sm focus:border-teal-500 focus:ring-teal-500"
+            class="block w-full rounded-md border-gray-300 pl-10 text-sm focus:border-blue-500 focus:ring-blue-500"
             placeholder="Search"
           />
         </div>

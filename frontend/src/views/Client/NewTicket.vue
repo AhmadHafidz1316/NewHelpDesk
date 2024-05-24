@@ -78,6 +78,7 @@ const onSubmit = async () => {
 
     router.push({ name: 'ClientSingleTicket', params: { reference: ticket.value.reference } })
   } else {
+    console.log(message)
     toast.error(message.value)
   }
 }

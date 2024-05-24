@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import FormInput from '@/components/Forms/FormInput.vue'
 import PrimaryButton from '@/components/Forms/PrimaryButton.vue'
-import Logo from '@/components/Layout/Logo.vue'
+import Logo from '@/assets/fps-icon.svg'
 
 import UserIcon from '@heroicons/vue/24/outline/UserIcon'
 import PhoneIcon from '@heroicons/vue/24/outline/PhoneIcon'
@@ -59,8 +59,7 @@ const onSubmit = async () => {
   <section class="mx-auto max-w-md justify-center">
     <div class="rounded-md border bg-white px-6 pt-6 pb-8 shadow">
       <header class="mb-6">
-        <Logo />
-
+        <img :src="Logo" alt="" class="w-full p-10" />
         <h2 class="text-center text-lg">Register for an account</h2>
       </header>
 
@@ -122,7 +121,7 @@ const onSubmit = async () => {
       <div class="mt-8">
         <p class="text-center text-gray-500">
           Already have an account?
-          <router-link :to="{ name: 'Login' }" class="text-teal-600">Sign in</router-link>
+          <router-link :to="{ name: 'Login' }" class="text-blue-600">Sign in</router-link>
         </p>
       </div>
     </div>

@@ -190,7 +190,7 @@ onBeforeRouteUpdate(async (to) => {
                     <div
                       :class="{
                         'text-gray-500': notification.read_at,
-                        'font-semibold text-teal-600': !notification.read_at
+                        'font-semibold text-blue-600': !notification.read_at
                       }"
                       class="text-base"
                     >
@@ -254,7 +254,7 @@ onBeforeRouteUpdate(async (to) => {
                     </Menu>
 
                     <div
-                      class="h-3 w-3 rounded-full bg-teal-500"
+                      class="h-3 w-3 rounded-full bg-blue-500"
                       v-if="!notification.read_at"
                     ></div>
                   </div>

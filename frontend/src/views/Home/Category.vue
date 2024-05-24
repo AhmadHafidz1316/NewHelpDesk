@@ -76,7 +76,7 @@ onBeforeRouteUpdate(async (to, from) => {
               :to="{ name: 'SingleFaq', params: { slug: faq.slug } }"
               class="group block rounded-lg border bg-white p-4 hover:bg-gray-50 active:shadow-none"
             >
-              <header class="text-xl font-semibold text-teal-600 group-hover:text-teal-700">
+              <header class="text-xl font-semibold text-blue-600 group-hover:text-blue-700">
                 <p>{{ faq.question }}</p>
               </header>
 

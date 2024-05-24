@@ -150,7 +150,7 @@ whenever(
       <div class="flex h-16 justify-between">
         <div class="flex">
           <div class="flex flex-shrink-0 items-center">
-            <img :src="Logo" alt="Logo" class="h-8 w-auto">
+            <img :src="Logo" alt="Logo" class="h-8 w-auto" />
           </div>
           <div class="hidden lg:ml-6 lg:flex lg:space-x-8">
             <router-link
@@ -160,7 +160,7 @@ whenever(
               class="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
               :class="[
                 $route.name === item.to
-                  ? 'border-teal-500 text-gray-900'
+                  ? 'border-blue-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               ]"
             >
@@ -173,14 +173,14 @@ whenever(
           <button
             @click="searchPaletteStore.open"
             type="button"
-            class="mr-4 block rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            class="mr-4 block rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             <span class="sr-only">Search</span>
             <MagnifyingGlassIcon class="h-6 w-6" />
           </button>
 
           <DisclosureButton
-            class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
+            class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
           >
             <span class="sr-only">Open main menu</span>
             <Bars3Icon v-if="!openDisclosure" class="block h-6 w-6" />
@@ -192,7 +192,7 @@ whenever(
           <button
             @click="searchPaletteStore.open"
             type="button"
-            class="mr-4 block rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            class="mr-4 block rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             <span class="sr-only">Search</span>
             <MagnifyingGlassIcon class="h-6 w-6" />
@@ -202,16 +202,16 @@ whenever(
             <MenuButton
               v-if="isClient"
               type="button"
-              class="mr-4 flex rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+              class="mr-4 flex rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
               <span class="sr-only">View notifications</span>
               <div class="relative">
                 <BellIcon class="h-6 w-6" />
                 <span class="absolute top-0 right-0 flex h-3 w-3" v-if="notificationsCounts.unread">
                   <span
-                    class="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"
+                    class="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"
                   ></span>
-                  <span class="relative inline-flex h-3 w-3 rounded-full bg-teal-500"></span>
+                  <span class="relative inline-flex h-3 w-3 rounded-full bg-blue-500"></span>
                 </span>
               </div>
             </MenuButton>
@@ -288,7 +288,7 @@ whenever(
                           <div
                             :class="{
                               'text-gray-600': notification.read_at,
-                              'font-semibold text-teal-600': !notification.read_at
+                              'font-semibold text-blue-600': !notification.read_at
                             }"
                             class="truncate text-base"
                             :title="notification.data.message"
@@ -355,7 +355,7 @@ whenever(
                           </Menu>
 
                           <div
-                            class="h-3 w-3 rounded-full bg-teal-500"
+                            class="h-3 w-3 rounded-full bg-blue-500"
                             v-if="!notification.read_at"
                           ></div>
                         </div>
@@ -388,7 +388,7 @@ whenever(
           <Menu as="div" class="relative flex-shrink-0">
             <div>
               <MenuButton
-                class="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                class="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 <span class="sr-only">Open user menu</span>
                 <img
@@ -442,7 +442,7 @@ whenever(
           <DisclosureButton
             :class="[
               {
-                'border-l-4 border-l-teal-500 bg-teal-50 text-teal-700': $route.name === item.to
+                'border-l-4 border-l-blue-500 bg-blue-50 text-blue-700': $route.name === item.to
               },
               'text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'
             ]"
@@ -468,16 +468,16 @@ whenever(
           <router-link
             @click="close"
             :to="{ name: 'ClientNotifications' }"
-            class="relative ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            class="relative ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             <span class="sr-only">View notifications</span>
             <BellIcon class="h-6 w-6" />
 
             <span class="absolute top-1 right-1 flex h-3 w-3" v-if="notificationsCounts.unread">
               <span
-                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"
               ></span>
-              <span class="relative inline-flex h-3 w-3 rounded-full bg-teal-500"></span>
+              <span class="relative inline-flex h-3 w-3 rounded-full bg-blue-500"></span>
             </span>
           </router-link>
         </div>

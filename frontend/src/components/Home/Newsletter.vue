@@ -53,7 +53,7 @@ const subscribe = async () => {
       </div>
       <div class="mx-auto max-w-md sm:max-w-3xl lg:max-w-7xl">
         <div
-          class="relative overflow-hidden rounded-2xl bg-teal-600 px-6 py-10 shadow-xl sm:px-12 sm:py-20"
+          class="relative overflow-hidden rounded-2xl bg-blue-600 px-6 py-10 shadow-xl sm:px-12 sm:py-20"
         >
           <div class="absolute inset-0 -mt-72 sm:-mt-32 md:mt-0">
             <svg
@@ -64,12 +64,12 @@ const subscribe = async () => {
               viewBox="0 0 1463 360"
             >
               <path
-                class="text-teal-500 text-opacity-40"
+                class="text-blue-500 text-opacity-40"
                 fill="currentColor"
                 d="M-82.673 72l1761.849 472.086-134.327 501.315-1761.85-472.086z"
               />
               <path
-                class="text-teal-700 text-opacity-40"
+                class="text-blue-700 text-opacity-40"
                 fill="currentColor"
                 d="M-217.088 544.086L1544.761 72l134.327 501.316-1761.849 472.086z"
               />
@@ -80,7 +80,7 @@ const subscribe = async () => {
               <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                 Sign up for our newsletter
               </h2>
-              <p class="mx-auto mt-6 max-w-2xl text-lg text-teal-100">
+              <p class="mx-auto mt-6 max-w-2xl text-lg text-blue-100">
                 Join our community of web app enthusiasts and receive expert tips, industry
                 insights, and early access to new releases by signing up for our newsletter.
               </p>
@@ -92,7 +92,7 @@ const subscribe = async () => {
                   v-model="email"
                   id="cta-email"
                   type="email"
-                  class="block w-full rounded-md border border-transparent px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-teal-600"
+                  class="block w-full rounded-md border border-transparent px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600"
                   placeholder="Enter your email"
                 />
               </div>
@@ -100,7 +100,7 @@ const subscribe = async () => {
                 <button
                   :disabled="isLoading"
                   type="submit"
-                  class="block w-full rounded-md border border-transparent bg-teal-800 px-5 py-3 text-base font-medium text-white shadow hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-teal-600 disabled:opacity-50 sm:px-10"
+                  class="block w-full rounded-md border border-transparent bg-blue-800 px-5 py-3 text-base font-medium text-white shadow hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600 disabled:opacity-50 sm:px-10"
                 >
                   Stay Informed
                 </button>

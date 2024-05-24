@@ -36,7 +36,7 @@ watch(dates, (value) => {
   <div>
     <label class="mb-1 block text-sm font-medium text-gray-700">Date range</label>
     <VueDatePicker
-      input-class-name="w-full cursor-default rounded-md transition-none border border-gray-300 bg-white py-2 pl-8 pr-10 text-left shadow-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 sm:text-sm"
+      input-class-name="w-full cursor-default rounded-md transition-none border border-gray-300 bg-white py-2 pl-8 pr-10 text-left shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
       v-model="dates"
       placeholder="Select a date range"
       range

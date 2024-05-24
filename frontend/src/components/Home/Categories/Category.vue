@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <router-link
-    class="flex items-center rounded-lg border bg-white hover:bg-teal-600 hover:text-white"
+    class="flex items-center rounded-lg border bg-white hover:bg-blue-600 hover:text-white"
     :to="{ name: 'HomeCategory', params: { slug: category.slug } }"
   >
     <div class="flex-1 p-6 text-center">

@@ -75,7 +75,7 @@ onBeforeRouteUpdate(async (to, from) => {
           <div class="divide-y rounded-lg border bg-white">
             <div class="mb-6 p-4">
               <header class="mb-6">
-                <h1 class="text-3xl font-semibold text-teal-600">{{ faq.question }}</h1>
+                <h1 class="text-3xl font-semibold text-blue-600">{{ faq.question }}</h1>
 
                 <div class="mt-2 flex items-center gap-1">
                   <CalendarIcon class="h-4 w-4 text-gray-400" />
@@ -93,7 +93,7 @@ onBeforeRouteUpdate(async (to, from) => {
                 <span>Still have questions?</span>
                 <router-link
                   :to="{ name: 'ClientNewTicket' }"
-                  class="font-semibold text-teal-600 hover:text-teal-700"
+                  class="font-semibold text-blue-600 hover:text-blue-700"
                 >
                   submit a ticket
                 </router-link>
