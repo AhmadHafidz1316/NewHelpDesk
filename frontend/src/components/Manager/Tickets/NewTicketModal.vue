@@ -110,7 +110,7 @@ const resetInput = ref(false)
 
 const toast = useToast()
 
-const { create, isLoading, isSuccess, errors, message } = useTickets()
+const { create, isLoading, isSuccess, errors = {}, message } = useTickets()
 
 const reset = () => {
   resetInput.value = true
@@ -158,7 +158,7 @@ const onSubmit = async () => {
               :selected="priority"
               label="Priority"
               :options="priorities"
-              :errors="errors.priority"
+              :errors="errors?.priority"
               null-text="Select a priority"
             />
 
@@ -167,7 +167,7 @@ const onSubmit = async () => {
               :selected="category"
               label="Category"
               :options="categories"
-              :errors="errors.category_id"
+              :errors="errors?.category_id"
               null-text="Select a category"
             />
           </div>
@@ -178,7 +178,7 @@ const onSubmit = async () => {
               :selected="client"
               label="Client"
               :options="clients"
-              :errors="errors.client_id"
+              :errors="errors?.client_id"
               null-text="Select a client"
             />
 
@@ -187,7 +187,7 @@ const onSubmit = async () => {
               :selected="agent"
               label="Agent"
               :options="agents"
-              :errors="errors.agent_id"
+              :errors="errors?.agent_id"
               null-text="Random agent"
             />
           </div>
@@ -198,20 +198,20 @@ const onSubmit = async () => {
             type="text"
             label="Subject"
             placeholder="Subject"
-            :errors="errors.subject"
+            :errors="errors?.subject"
           />
 
           <RichText
             @change="(value) => (description = value)"
             label="Description"
             placeholder="Describe your issue..."
-            :errors="errors.description"
+            :errors="errors?.description"
           />
 
           <FileUpload
             @change="(value) => (files = value)"
             label="Drop attachments here or click to browse"
-            :errors="errors.attachments"
+            :errors="errors?.attachments"
             :ref="files"
             :multiple="true"
           />

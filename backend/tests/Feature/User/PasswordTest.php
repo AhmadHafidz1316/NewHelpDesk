@@ -1,4 +1,5 @@
-AssignAgentTest.php<?php
+AssignAgentTest.php
+<?php
 
 use App\Models\User;
 use App\Notifications\PasswordChanged;
@@ -12,8 +13,8 @@ test('a user can change their password', function () {
 
     $this->actingAs($user)
         ->putJson(route('update-password'), [
-            'current_password'      => 'OTickets@00',
-            'password'              => 'new-password',
+            'current_password' => 'fpshelpdesk@00',
+            'password' => 'new-password',
             'password_confirmation' => 'new-password',
         ])
         ->assertOk();
@@ -26,8 +27,8 @@ test('a user get notified when their password is changed', function () {
 
     $this->actingAs($user)
         ->putJson(route('update-password'), [
-            'current_password'      => 'OTickets@00',
-            'password'              => 'new-password',
+            'current_password' => 'fpshelpdesk@00',
+            'password' => 'new-password',
             'password_confirmation' => 'new-password',
         ])
         ->assertOk();

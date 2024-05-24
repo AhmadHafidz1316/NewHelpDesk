@@ -7,8 +7,8 @@ it('returns a token', function () {
     $user = User::factory()->create();
 
     $response = $this->post(route('login'), [
-        'email'    => $user->email,
-        'password' => 'OTickets@00',
+        'email' => $user->email,
+        'password' => 'fpshelpdesk@00',
     ]);
 
     logger($response->getContent());
