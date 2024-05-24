@@ -11,12 +11,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'              => fake()->name(),
-            'email'             => fake()->unique()->safeEmail(),
-            'phone'             => fake()->phoneNumber(),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
             'email_verified_at' => now(),
-            'password'          => 'OTickets@00',
-            'remember_token'    => Str::random(10),
+            'password' => 'fpshelpdesk@00',
+            'remember_token' => Str::random(10),
         ];
     }
 
@@ -30,7 +30,7 @@ class UserFactory extends Factory
     public function agent(): Factory
     {
         return $this->state(fn(array $attributes) => [
-            'role'          => 'agent',
+            'role' => 'agent',
             'department_id' => Department::query()->inRandomOrder()->first()->id,
         ]);
     }
