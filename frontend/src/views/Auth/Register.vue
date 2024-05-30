@@ -3,6 +3,8 @@ import FormInput from '@/components/Forms/FormInput.vue'
 import PrimaryButton from '@/components/Forms/PrimaryButton.vue'
 import Logo from '@/assets/fps-icon.svg'
 
+import '@/assets/style.css'
+
 import UserIcon from '@heroicons/vue/24/outline/UserIcon'
 import PhoneIcon from '@heroicons/vue/24/outline/PhoneIcon'
 import EnvelopeIcon from '@heroicons/vue/24/outline/EnvelopeIcon'
@@ -56,11 +58,11 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <section class="mx-auto max-w-md justify-center">
-    <div class="rounded-md border bg-white px-6 pt-6 pb-8 shadow">
+  <section class="background-image flex h-screen items-center justify-center">
+    <div class="rounded-md border bg-opacity-80 bg-white px-6 pt-6 pb-8 shadow">
       <header class="mb-6">
         <img :src="Logo" alt="" class="w-full p-10" />
-        <h2 class="text-center text-lg">Register for an account</h2>
+        <h2 class="login text-center text-lg">Register for an account</h2>
       </header>
 
       <form @submit.prevent="onSubmit">
@@ -69,7 +71,7 @@ const onSubmit = async () => {
             id="name"
             type="text"
             label="Full Name"
-            placeholder="John Doe"
+            placeholder="Rizki Jul"
             @change="(value) => (name = value)"
             :errors="errors?.name"
             :Icon="UserIcon"
@@ -79,7 +81,7 @@ const onSubmit = async () => {
             id="phone"
             type="tel"
             label="Phone Number"
-            placeholder="0612345678"
+            placeholder="081234567"
             @change="(value) => (phone = value)"
             :errors="errors?.phone"
             :Icon="PhoneIcon"
@@ -127,3 +129,18 @@ const onSubmit = async () => {
     </div>
   </section>
 </template>
+
+<style scoped>
+.background-image {
+background-image: url('@/assets/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0; /* Add this line to remove the top margin */
+
+}
+
+.bg-opacity-80 {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+</style>

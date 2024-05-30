@@ -31,7 +31,7 @@ import getCategories from '@/composables/categories/getCategories'
 
 import debounce from 'lodash/debounce'
 
-import EmptyTicketsLottie from '@/assets/emptyTickets.json'
+import EmptyTicketsLottie from '@/assets/where.json'
 import getTicketsCountsByStatus from '@/composables/tickets/getTicketsCountsByStatus'
 
 useHead({ title: `Tickets | ${appTitle}` })
@@ -312,7 +312,7 @@ const reset = async () => {
       <LottieAnimation
         class="-mt-6 w-96 max-w-full"
         :animationData="EmptyTicketsLottie"
-        :loop="false"
+        :loop="true"
       />
       <h3 class="text-xl font-medium text-gray-900">No tickets</h3>
       <p class="mt-1 text-sm text-gray-500">Do you have any questions?</p>

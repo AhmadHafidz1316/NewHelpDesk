@@ -8,6 +8,8 @@ use App\Services\TicketService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
+
 
 class TicketController extends Controller
 {
@@ -50,22 +52,26 @@ class TicketController extends Controller
     }
 
     public function store(StoreTicketRequest $request): JsonResponse
-    {
-        $agentId = $request->user('sanctum')->isManager() && $request->agent_id
-            ? $request->agent_id
-            : null;
+{
+    
+    Log::info('Request Data:', $request->all());
 
-        $ticket = $this->service->createTicket(
-            $request->safe()->except(['attachments', 'agent_id']),
-            $agentId
-        );
+    $agentId = $request->user('sanctum')->isManager() && $request->agent_id
+        ? $request->agent_id
+        : null;
 
-        if ($request->hasFile('attachments')) {
-            $this->service->storeAttachments($ticket, $request->file('attachments'));
-        }
+    $ticket = $this->service->createTicket(
+        $request->safe()->except(['attachments', 'agent_id']),
+        $agentId
+    );
 
-        return $this->successResponse('Ticket created successfully', $ticket);
+    if ($request->hasFile('attachments')) {
+        $this->service->storeAttachments($ticket, $request->file('attachments'));
     }
+
+    return $this->successResponse('Ticket created successfully', $ticket);
+}
+
 
     public function update(UpdateTicketRequest $request, $id): JsonResponse
     {

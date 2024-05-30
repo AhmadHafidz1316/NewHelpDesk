@@ -21,3 +21,12 @@
 .v-popper__inner {
     font-size: 0.75rem;
 }
+
+@font-face {
+    font-family: Flagoria;
+    src: url(../assets/FlagoriaCalintha-Regular.ttf);
+}
+
+.login {
+    font-family:  Helvetica;
+}

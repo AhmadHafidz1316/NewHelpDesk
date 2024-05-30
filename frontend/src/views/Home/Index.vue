@@ -5,11 +5,8 @@ import CategorySkeleton from '@/components/Home/Categories/CategorySkeleton.vue'
 // import Newsletter from '@/components/Home/Newsletter.vue'
 
 import { onMounted } from 'vue'
-
 import { useHead } from 'unhead'
-
 import { appTitle } from '@/global'
-
 import getCategories from '@/composables/categories/getCategories'
 
 const { load, categories, isLoading } = getCategories()

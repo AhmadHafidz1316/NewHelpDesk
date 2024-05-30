@@ -17,7 +17,7 @@ import { onMounted, ref } from 'vue'
 
 import { useToast } from 'vue-toastification'
 
-import EmptyNotificationsLottie from '@/assets/emptyNotifications.json'
+import bell from '@/assets/bell.json'
 import { onBeforeRouteUpdate } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
@@ -280,7 +280,7 @@ onBeforeRouteUpdate(async (to) => {
     </template>
 
     <template v-else>
-      <LottieAnimation :animationData="EmptyNotificationsLottie" class="-mt-10 w-60 max-w-full" />
+      <LottieAnimation :animationData="bell" class="-mt-10 w-60 max-w-full" />
       <p class="mb-6 text-center text-gray-500">You have no notifications yet</p>
     </template>
   </section>
