@@ -230,7 +230,6 @@ const restoreDepartment = async () => {
 const subDepartmentModalIsOpen = ref(false)
 
 const handleAddSubDepartment = () => {
-  // Di sini Anda bisa melakukan logika tambahan jika diperlukan sebelum membuka modal
   subDepartmentModalIsOpen.value = true
 }
 </script>

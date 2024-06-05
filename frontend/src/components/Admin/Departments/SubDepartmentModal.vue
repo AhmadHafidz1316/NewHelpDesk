@@ -79,7 +79,7 @@ watch(
 axios
   .get('http://127.0.0.1:8000/api/departments')
   .then((response) => {
-    console.log('Response data:');
+    console.log('Response data:', response.data.data[0].name);
     const departmentNamesArray = []; 
 
     response.data.data.forEach(department => {
@@ -98,7 +98,7 @@ axios
   <Modal :open="open" @close="$emit('close')" :title="title">
     <form @submit.prevent="onSubmit">
       <div class="p-6">
-        <FormSelect class="w-full" id="department" label="Department" :options="departmentNames">
+        <FormSelect class="w-full b" id="department" label="Department" :options="departmentNames">
         </FormSelect>
       </div>
 
