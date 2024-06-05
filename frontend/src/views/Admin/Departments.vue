@@ -9,6 +9,7 @@ import NotFoundResults from '@/components/Common/NotFoundResults.vue'
 import ConfirmationModal from '@/components/Admin/ConfirmationModal.vue'
 import TrashSwitch from '@/components/Common/TrashSwitch.vue'
 import DepartmentModal from '@/components/Admin/Departments/DepartmentModal.vue'
+import SubDepartMentModal from '@/components/Admin/Departments/SubDepartmentModal.vue'
 
 import { MenuItem } from '@headlessui/vue'
 
@@ -225,9 +226,23 @@ const restoreDepartment = async () => {
     toast.error(message.value)
   }
 }
+
+const subDepartmentModalIsOpen = ref(false)
+
+const handleAddSubDepartment = () => {
+  // Di sini Anda bisa melakukan logika tambahan jika diperlukan sebelum membuka modal
+  subDepartmentModalIsOpen.value = true
+}
 </script>
 
 <template>
+  <SubDepartMentModal
+    :open="subDepartmentModalIsOpen"
+    :departmentToEdit="departmentToEdit"
+    @close="subDepartmentModalIsOpen = false"
+    @success="handleAfterSave"
+  />
+
   <DepartmentModal
     :open="departmentModalIsOpen"
     :departmentToEdit="departmentToEdit"
@@ -252,6 +267,9 @@ const restoreDepartment = async () => {
   <header class="mb-3 flex flex-col justify-between gap-3 sm:flex-row-reverse">
     <div class="flex justify-end sm:justify-start">
       <ActionButton :Icon="PlusIcon" text="New Department" :action="handleAdd" />
+    </div>
+    <div class="flex justify-end sm:justify-start">
+      <ActionButton :Icon="PlusIcon" text="Add Sub Department" :action="handleAddSubDepartment" />
     </div>
 
     <div class="flex flex-1 gap-3">

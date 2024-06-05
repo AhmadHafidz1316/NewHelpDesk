@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
                 'password' => 'fpshelpdesk@00'
             ]);
 
-        Department::factory()
+            Department::factory()
             ->count(1)
             ->create()
             ->each(function (Department $department) {
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
                         })
                 );
             });
-
+            
         User::factory()
             ->client()
             ->create([
