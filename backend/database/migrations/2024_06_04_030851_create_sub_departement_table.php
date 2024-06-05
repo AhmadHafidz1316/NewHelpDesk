@@ -10,11 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('sub_departement', function (Blueprint $table) {
+        Schema::create('sub_department', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('departement_id');
+            $table->unsignedBigInteger('department_id');
             $table->string('name')->unique();
             $table->timestamps();
+
+            $table->foreign('department_id')->on('departments')->references('id');
         });
     }
 
