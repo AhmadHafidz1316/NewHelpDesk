@@ -2,7 +2,9 @@
 import Modal from '@/components/Common/Modal.vue'
 import PrimaryButton from '@/components/Forms/PrimaryButton.vue'
 import FormSelect from '@/components/Forms/FormSelect.vue'
+import FormInput from '@/components/Forms/FormInput.vue'
 
+import type Department from '@/types/Department'
 import { useToast } from 'vue-toastification'
 import { ref, computed, watch } from 'vue'
 import axios from 'axios'
@@ -49,21 +51,13 @@ const reset = () => {
   name.value = ''
 }
 
-const onSubmit = async () => {
-  await save({ name: name.value }, method.value, props.departmentToEdit.id ?? null)
-
-  if (isSuccess.value) {
-    toast.success(message.value)
-    reset()
-
-    if (method.value === 'post') emit('success', false)
-    else emit('success', true)
-
-    emit('close')
-  } else {
-    toast.error(message.value)
-  }
+const onSubmit = () => {
+  console.log('Department:', departmentNames.value)
+  console.log('Name:', name.value)
+  emit('success', true)
+  reset()
 }
+
 
 watch(
   () => props.departmentToEdit,
@@ -100,6 +94,18 @@ axios
       <div class="p-6">
         <FormSelect class="w-full b" id="department" label="Department" :options="departmentNames">
         </FormSelect>
+        <br>
+        <FormInput
+          class="w-full"
+          id="name"
+          label="Name"
+          placeholder="Name"
+          type="text"
+          :value="name"
+          @change="(value) => (name = value)"
+          :reset="resetInput"
+          @reset="() => (resetInput = false)"
+        />
       </div>
 
       <div class="mt-3 flex justify-end border-t bg-gray-50 px-6 py-3">
