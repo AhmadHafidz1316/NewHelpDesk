@@ -30,6 +30,7 @@
     "vue-filepond": "^7.0.3",
     "vue-router": "^4.1.6",
     "vue-toastification": "^2.0.0-rc.5",
+    "vue-treeselect": "^1.0.7",
     "vue3-apexcharts": "^1.4.1",
     "vue3-lottie": "^2.5.0"
   },

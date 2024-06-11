@@ -139,21 +139,13 @@ watch(
           :value="slug"
           @change="(value) => (slug = value)"
           :errors="errors.slug"
-          :reset="resetInput"
+          :reset="resetInput" 
           @reset="() => (resetInput = false)"
         />
 
-        <Autocomplete
-          null-text="Select a department"
-          class="w-full"
-          label="Department"
-          :selected="department"
-          :options="departments"
-          @update="(value) => (department = value)"
-          :errors="errors.department_id"
-          :reset="resetInput"
-          @reset="() => (resetInput = false)"
-        />
+        
+
+       
       </div>
 
       <div class="mt-3 flex justify-end border-t bg-gray-50 px-6 py-3">

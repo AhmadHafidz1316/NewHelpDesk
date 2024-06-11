@@ -12,7 +12,14 @@ class Sla extends Pivot
     protected $table = 'sla';
     protected $fillable = [
         'ticket_id',
-        'response_time',
-        'resolution_time'
     ];
+
+
+
+
+    public function detail(): BelongsTo
+    {
+        return $this->belongsTo(slamanagement::class, 'sla_id', 'id');
+    }
+
 }

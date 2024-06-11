@@ -11,7 +11,7 @@ class DepartmentService
     {
     }
 
-    public function getAll(): array
+    public function getAll()
     {
         return $this->repository->getAll();
     }

@@ -8,15 +8,21 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PriorityController;
+use App\Http\Controllers\SlaManagement;
+use App\Http\Controllers\SubdepartmentController;
 use App\Http\Controllers\TicketAgentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TicketReplyController;
 use App\Http\Controllers\UserController;
+use App\Models\priority;
 use Illuminate\Support\Facades\Route;
 
 /**
  * Protected routes
  */
+
+Route::post('slamanagement', [SlaManagement::class, 'store']);
 Route::middleware(['auth:sanctum'])
     ->group(function () {
         Route::controller(AuthController::class)
@@ -30,6 +36,11 @@ Route::middleware(['auth:sanctum'])
                 Route::put('update-password', 'updatePassword')
                     ->name('update-password');
             });
+        Route::post('sub-department', [SubdepartmentController::class, 'store']);
+        Route::get('sub-department', [SubdepartmentController::class, 'get']);
+        Route::get('sub-department/count', [SubdepartmentController::class, 'getcount']);
+        Route::post('priority', [PriorityController::class, 'store']);
+        Route::get('priority', [PriorityController::class, 'get']);
 
         Route::middleware(['can:is-admin'])->group(function () {
             Route::apiResource('departments', DepartmentController::class)

@@ -10,7 +10,7 @@ class StoreTicketRequest extends FormRequest
     {
         $rules = [
             'subject' => 'required|string|max:255',
-            'priority' => 'required|in:low,medium,high',
+            'priority_id' => 'required',
             'description' => 'required|string|min:10',
             'category_id' => 'required|integer|exists:categories,id',
             'attachments.*' => 'nullable|image|max:10000',

@@ -32,19 +32,35 @@ import { ref, onMounted, watch, computed } from 'vue'
 import type Department from '@/types/Department'
 import type DepartmentsFilters from '@/types/DepartmentsFilters'
 
-import { debounce } from 'lodash'
+import { debounce, values } from 'lodash'
 
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 
 import { useToast } from 'vue-toastification'
+import axios from 'axios'
 
 useHead({ title: `Departments | ${appTitle}` })
+let count:any = [];
+axios
+.get('sub-department/count').then((value) => {
+console.log(value.data.data)
+value.data.data.map((data:any) => {
+console.log('data',data)
+count.push(data.subdepartment_count)
+}
+)
+
+console.log('sssss',count);
+
+}
+).catch((err) => console.log(err))
+
 
 const { setTitle } = useDashboard()
 
 setTitle('Departments')
 
-const headers = ['Department', 'Agents', 'Categories', 'Created At', '']
+const headers = ['Department','subDepartment', 'Agents', 'Categories', 'Created At', '']
 
 const route = useRoute()
 
@@ -303,9 +319,13 @@ const handleAddSubDepartment = () => {
   <TableCard :headers="headers" v-else>
     <template v-slot:default>
       <template v-if="departments.data?.length">
-        <tr v-for="department in departments.data" :key="department.id">
+        <tr v-for="(department,index) in departments.data"  :key="department.id">
           <TableTd>
             {{ department.name }}
+          </TableTd>
+          <TableTd>
+            <!-- {{ Subdepartments }} -->
+              {{  count[index]}}
           </TableTd>
 
           <TableTd>

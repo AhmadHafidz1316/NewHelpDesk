@@ -20,7 +20,10 @@ const emit = defineEmits<{
 }>()
 
 const name = ref('')
-const departmentNames = ref<string[]>([]) // Variable to hold department names
+const departementSelected = ref('')
+const departmentNames = ref<string[]>([]) 
+
+
 
 const method = computed(() => (props.departmentToEdit.id ? 'put' : 'post'))
 
@@ -52,11 +55,31 @@ const reset = () => {
 }
 
 const onSubmit = () => {
-  console.log('Department:', departmentNames.value)
+  console.log('Department:', departementSelected.value)
   console.log('Name:', name.value)
+
+   axios.post('http://127.0.0.1:8000/api/departments', {
+    name: name.value  ,
+    parent: departementSelected.value
+  })
+  .then((response) => {
+    toast.success('Subdepartment created successfully')
+    emit('success', true)
+    reset()
+  })
+  .catch((error) => {
+    console.error('Error creating subdepartment:', error)
+    toast.error('Failed to create subdepartment')
+  })
+
   emit('success', true)
   reset()
 }
+// watch(departementSelected, async (newQuestion, oldQuestion) => {
+//   console.log('sss',newQuestion)
+//     departementSelected.value = newQuestion
+// })
+
 
 
 watch(
@@ -70,13 +93,15 @@ watch(
   }
 )
 
+
+
 axios
   .get('http://127.0.0.1:8000/api/departments')
   .then((response) => {
     console.log('Response data:', response.data.data[0].name);
-    const departmentNamesArray = []; 
+    const departmentNamesArray: any[] = []; 
 
-    response.data.data.forEach(department => {
+    response.data.data.forEach((department: { name: any }) => {
       departmentNamesArray.push(department.name); 
       console.log(department.name);
     });
@@ -92,8 +117,9 @@ axios
   <Modal :open="open" @close="$emit('close')" :title="title">
     <form @submit.prevent="onSubmit">
       <div class="p-6">
-        <FormSelect class="w-full b" id="department" label="Department" :options="departmentNames">
+        <FormSelect class="w-full b" id="department" label="Department" v-model="departementSelected" :options="departmentNames" @change="(value) => (departementSelected = value)">
         </FormSelect>
+      
         <br>
         <FormInput
           class="w-full"
