@@ -86,6 +86,10 @@ watch(
   <Modal :open="open" @close="$emit('close')" :title="title">
     <form @submit.prevent="onSubmit">
       <div class="p-6">
+
+        
+
+
         <FormInput
           class="w-full"
           id="name"
