@@ -27,7 +27,7 @@ class DepartmentController extends Controller
 
 
         if ($request->parent) {
-            $department = Department::where('id', $request['parent'])->firstOrFail();
+            $department = Department::where('name', $request['parent'])->firstOrFail();
             if (!$department) {
                 return $this->errorResponse('not found', 404);
             }

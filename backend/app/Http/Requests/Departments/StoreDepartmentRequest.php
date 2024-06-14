@@ -10,7 +10,7 @@ class StoreDepartmentRequest extends FormRequest
     {
         return [
             'name' => 'required|string|unique:departments,name',
-            'parent' => 'integer',
+            'parent' => 'sometimes',
         ];
     }
 
