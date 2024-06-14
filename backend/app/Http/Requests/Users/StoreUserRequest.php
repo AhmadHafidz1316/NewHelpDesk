@@ -9,12 +9,13 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         $validation = [
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
-            'phone'    => 'required|string|max:255',
-            'role'     => 'required|in:admin,agent',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'parent' => 'sometimes|integer',
+            'phone' => 'required|string|max:255',
+            'role' => 'required|in:admin,agent',
             'password' => 'required|string|min:8',
-            'picture'  => 'sometimes|image|max:10000',
+            'picture' => 'sometimes|image|max:10000',
         ];
 
         if ($this->role === 'agent')
