@@ -9,6 +9,9 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+
+
 
 
 class TicketController extends Controller
@@ -52,35 +55,43 @@ class TicketController extends Controller
     }
 
     public function store(StoreTicketRequest $request): JsonResponse
-{
-    
-    Log::info('Request Data:', $request->all());
+    {
 
-    $agentId = $request->user('sanctum')->isManager() && $request->agent_id
-        ? $request->agent_id
-        : null;
+        Log::info('Request Data:', $request->all());
 
-    $ticket = $this->service->createTicket(
-        $request->safe()->except(['attachments', 'agent_id']),
-        $agentId
-    );
+        $agentId = $request->user('sanctum')->isManager() && $request->agent_id
+            ? $request->agent_id
+            : null;
 
-    if ($request->hasFile('attachments')) {
-        $this->service->storeAttachments($ticket, $request->file('attachments'));
+        $ticket = $this->service->createTicket(
+            $request->safe()->except(['attachments', 'agent_id']),
+            $agentId
+        );
+
+        if ($request->hasFile('attachments')) {
+            $this->service->storeAttachments($ticket, $request->file('attachments'));
+        }
+
+        return $this->successResponse('Ticket created successfully', $ticket);
     }
-
-    return $this->successResponse('Ticket created successfully', $ticket);
-}
 
 
     public function update(UpdateTicketRequest $request, $id): JsonResponse
     {
         try {
             $ticket = $this->service->find($id);
-
             $this->authorize('update', $ticket);
+            if ($request->status == 'resolved') {
+                $resolve_at = now();
+                $solved_time = $ticket->created_at->diffInMinutes(now());
 
-            $ticket = $this->service->update($ticket, $request->validated());
+                $request->merge([
+                    'resolved_at' => $resolve_at,
+                    'solved_time' => $solved_time
+                ]);
+            }
+
+            $ticket->update($request->all());
 
             return $this->successResponse('Ticket updated successfully', $ticket);
         } catch (ModelNotFoundException) {

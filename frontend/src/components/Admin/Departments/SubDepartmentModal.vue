@@ -59,7 +59,7 @@ const onSubmit = () => {
   console.log('Name:', name.value)
 
    axios.post('http://127.0.0.1:8000/api/departments', {
-    name: name.value  ,
+    name: name.value,
     parent: departementSelected.value
   })
   .then((response) => {
@@ -80,8 +80,6 @@ const onSubmit = () => {
 //     departementSelected.value = newQuestion
 // })
 
-
-
 watch(
   () => props.departmentToEdit,
   () => {
@@ -92,8 +90,6 @@ watch(
     }
   }
 )
-
-
 
 axios
   .get('http://127.0.0.1:8000/api/departments')

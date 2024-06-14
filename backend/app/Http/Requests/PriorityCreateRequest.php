@@ -22,8 +22,8 @@ class PriorityCreateRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'response_time' => 'required|integer|max:100',
-            'resolution_time' => 'required|integer|max:100',
+            'response_time' => 'required|integer',
+            'resolution_time' => 'required|integer',
             'priority_name' => 'required|unique:priority'
         ];
         return $rules;
