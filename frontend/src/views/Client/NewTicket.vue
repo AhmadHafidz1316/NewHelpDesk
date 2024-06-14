@@ -22,8 +22,8 @@ import useTickets from '@/composables/tickets/useTickets'
 import { onBeforeRouteLeave, useRouter } from 'vue-router'
 
 import { useToast } from 'vue-toastification'
-import useFaqs from '@/composables/faqs/useFaqs'
-// useHead({ title: NewTicket || ${appTitle}})
+
+  
 
 const priorities = [
   { name: 'Low', value: 'low' },

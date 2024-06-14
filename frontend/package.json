@@ -17,6 +17,7 @@
     "@vuepic/vue-datepicker": "^4.1.0",
     "@vueup/vue-quill": "^1.1.0",
     "@vueuse/core": "^9.13.0",
+    "ant-design-vue": "^4.2.3",
     "apexcharts": "^3.37.1",
     "axios": "^1.3.4",
     "filepond": "^4.30.4",
@@ -32,7 +33,8 @@
     "vue-toastification": "^2.0.0-rc.5",
     "vue-treeselect": "^1.0.7",
     "vue3-apexcharts": "^1.4.1",
-    "vue3-lottie": "^2.5.0"
+    "vue3-lottie": "^2.5.0",
+    "vue3-treeselect": "^0.1.10"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
