@@ -28,10 +28,11 @@ return new class extends Migration {
                 ->constrained('users')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+            $table->dateTime('first_response')->nullable();
+            $table->integer('solved_time')->nullable();
+            $table->integer('response_time')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-
         });
     }
 

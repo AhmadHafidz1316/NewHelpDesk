@@ -55,33 +55,6 @@ class TicketService
         $this->assignToAgent($ticket, $agentId);
         $this->assignToAgent($ticket, $agentId);
 
-        $idTicket = Ticket::select('id', 'priority')->where('reference', $data['reference'])->first();
-
-        switch ($idTicket->priority) {
-            case 'low':
-                $responseTime = 8;
-                $resolutionTime = 72;
-                break;
-            case 'medium':
-                $responseTime = 4;
-                $resolutionTime = 48;
-                break;
-            case 'high':
-                $responseTime = 1;
-                $resolutionTime = 24;
-                break;
-            default:
-
-                $responseTime = 2;
-                $resolutionTime = 2;
-                break;
-        }
-
-        Sla::create([
-            'ticket_id' => $idTicket->id,
-            'response_time' => $responseTime,
-            'resolution_time' => $resolutionTime,
-        ]);
 
         $this->notifyClient($ticket, new TicketCreated($ticket));
         $this->notifyAgent($ticket, new AgentAssigned($ticket));

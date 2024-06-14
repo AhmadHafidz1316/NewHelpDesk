@@ -10,7 +10,7 @@ class UpdateTicketRequest extends FormRequest
     {
         return [
             'category_id' => 'sometimes|integer|exists:categories,id',
-            'priority'    => 'sometimes|in:low,medium,high',
+            'priority_id' => 'sometimes|integer',
         ];
     }
 
