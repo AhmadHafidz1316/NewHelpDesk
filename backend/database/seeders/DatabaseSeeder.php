@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
                 'password' => 'fpshelpdesk@00'
             ]);
 
-            Department::factory()
+        Department::factory()
             ->count(1)
             ->create()
             ->each(function (Department $department) {
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
                         })
                 );
             });
-            
+
         User::factory()
             ->client()
             ->create([
@@ -63,77 +63,77 @@ class DatabaseSeeder extends Seeder
                 'email' => 'client@gmail.com'
             ]);
 
-        $randomCategories = Category::query()
-            ->inRandomOrder()
-            ->limit(3)
-            ->get()
-            ->each(function (Category $category) {
-                $category->cannedResponses()->saveMany(
-                    CannedResponse::factory()
-                        ->count(2)
-                        ->create()
-                );
+        // $randomCategories = Category::query()
+        //     ->inRandomOrder()
+        //     ->limit(3)
+        //     ->get()
+        //     ->each(function (Category $category) {
+        //         $category->cannedResponses()->saveMany(
+        //             CannedResponse::factory()
+        //                 ->count(2)
+        //                 ->create()
+        //         );
 
-                $category->tickets()->saveMany(
-                    Ticket::factory()
-                        ->count(2)
-                        ->create()
-                );
-            });
+        //         $category->tickets()->saveMany(
+        //             Ticket::factory()
+        //                 ->count(2)
+        //                 ->create()
+        //         );
+        //     });
 
 
-        $ticketService = app(TicketService::class);
+        // $ticketService = app(TicketService::class);
 
-        Ticket::query()
-            ->get()
-            ->each(function (Ticket $ticket) use ($ticketService) {
-                $ticketService->assignToAgent($ticket);
+        // Ticket::query()
+        //     ->get()
+        //     ->each(function (Ticket $ticket) use ($ticketService) {
+        //         $ticketService->assignToAgent($ticket);
 
-                $attachments = TicketAttachment::factory()
-                    ->count(fake()->numberBetween(0, 2))
-                    ->create();
+        //         $attachments = TicketAttachment::factory()
+        //             ->count(fake()->numberBetween(0, 2))
+        //             ->create();
 
-                $ticket
-                    ->attachments()
-                    ->saveMany($attachments);
+        //         $ticket
+        //             ->attachments()
+        //             ->saveMany($attachments);
 
-                $clientReply = TicketReply::factory()
-                    ->create([
-                        'ticket_id' => $ticket->id,
-                        'user_id' => $ticket->client_id
-                    ]);
+        //         $clientReply = TicketReply::factory()
+        //             ->create([
+        //                 'ticket_id' => $ticket->id,
+        //                 'user_id' => $ticket->client_id
+        //             ]);
 
-                $clientReplyAttachments = ReplyAttachment::factory()
-                    ->count(fake()->numberBetween(0, 2))
-                    ->create();
+        //         $clientReplyAttachments = ReplyAttachment::factory()
+        //             ->count(fake()->numberBetween(0, 2))
+        //             ->create();
 
-                $clientReply
-                    ->attachments()
-                    ->saveMany($clientReplyAttachments);
+        //         $clientReply
+        //             ->attachments()
+        //             ->saveMany($clientReplyAttachments);
 
-                $ticket
-                    ->replies()
-                    ->save($clientReply);
+        //         $ticket
+        //             ->replies()
+        //             ->save($clientReply);
 
-                if ($ticket->agents()->exists()) {
-                    $agentReply = TicketReply::factory()
-                        ->create([
-                            'ticket_id' => $ticket->id,
-                            'user_id' => $ticket->agents->random()->id
-                        ]);
+        //         if ($ticket->agents()->exists()) {
+        //             $agentReply = TicketReply::factory()
+        //                 ->create([
+        //                     'ticket_id' => $ticket->id,
+        //                     'user_id' => $ticket->agents->random()->id
+        //                 ]);
 
-                    $agentReplyAttachments = ReplyAttachment::factory()
-                        ->count(fake()->numberBetween(0, 2))
-                        ->create();
+        //             $agentReplyAttachments = ReplyAttachment::factory()
+        //                 ->count(fake()->numberBetween(0, 2))
+        //                 ->create();
 
-                    $agentReply
-                        ->attachments()
-                        ->saveMany($agentReplyAttachments);
+        //             $agentReply
+        //                 ->attachments()
+        //                 ->saveMany($agentReplyAttachments);
 
-                    $ticket
-                        ->replies()
-                        ->save($agentReply);
-                }
-            });
+        //             $ticket
+        //                 ->replies()
+        //                 ->save($agentReply);
+        //         }
+        // });
     }
 }

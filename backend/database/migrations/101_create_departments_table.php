@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->integer('parent')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -16,8 +16,6 @@ return new class extends Migration {
             $table->text('description');
             $table->enum('status', ['unassigned', 'assigned', 'resolved', 'closed'])
                 ->default('unassigned');
-            $table->enum('priority', ['low', 'medium', 'high'])
-                ->nullable();
             $table->dateTime('resolved_at')
                 ->nullable();
             $table->dateTime('closed_at')
@@ -32,6 +30,8 @@ return new class extends Migration {
                 ->cascadeOnUpdate();
             $table->softDeletes();
             $table->timestamps();
+
+
         });
     }
 

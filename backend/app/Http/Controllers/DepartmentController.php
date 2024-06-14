@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Departments\StoreDepartmentRequest;
-use App\Http\Requests\Departments\UpdateDepartmentRequest;
+use App\Models\Department;
+use Illuminate\Http\JsonResponse;
 use App\Services\DepartmentService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\Departments\StoreDepartmentRequest;
+use App\Http\Requests\Departments\UpdateDepartmentRequest;
 
 class DepartmentController extends Controller
 {
@@ -23,9 +24,27 @@ class DepartmentController extends Controller
 
     public function store(StoreDepartmentRequest $request): JsonResponse
     {
-        $department = $this->service->create($request->validated());
 
-        return $this->successResponse('Department created successfully', $department);
+
+        if ($request->parent) {
+            $department = Department::where('id', $request['parent'])->firstOrFail();
+            if (!$department) {
+                return $this->errorResponse('not found', 404);
+            }
+
+            $departmentId = $department->id;
+
+            $subdepartment = Department::create([
+                'name' => $request->name,
+                'parent' => $departmentId,
+            ]);
+            return $this->successResponse('Department created successfully', $subdepartment);
+
+        } else {
+            $department = $this->service->create($request->validated());
+
+            return $this->successResponse('Department created successfully', $department);
+        }
     }
 
     public function update(UpdateDepartmentRequest $request, $id): JsonResponse

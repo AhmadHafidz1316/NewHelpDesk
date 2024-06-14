@@ -21,9 +21,9 @@ class Ticket extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'subject'     => CleanHtml::class,
+        'subject' => CleanHtml::class,
         'description' => CleanHtml::class,
-        'created_at'  => 'datetime:M d, Y',
+        'created_at' => 'datetime:M d, Y',
         'resolved_at' => 'datetime:M d, Y',
     ];
 
@@ -90,5 +90,14 @@ class Ticket extends Model
     public function newEloquentBuilder($query): TicketBuilder
     {
         return new TicketBuilder($query);
+    }
+
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function priority(): BelongsTo
+    {
+        return $this->belongsTo(priority::class, 'priority_id', 'id');
     }
 }
