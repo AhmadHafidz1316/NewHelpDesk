@@ -11,25 +11,37 @@ import type Option from '@/types/Option'
 import type Category from '@/types/Category'
 
 import { ref, onMounted, watch } from 'vue'
-
-import { useHead } from 'unhead'
-
-import { appTitle } from '@/global'
+import axios from 'axios'
 
 import getCategories from '@/composables/categories/getCategories'
 import useTickets from '@/composables/tickets/useTickets'
+import useFaqs from '@/composables/faqs/useFaqs'
 
 import { onBeforeRouteLeave, useRouter } from 'vue-router'
 
 import { useToast } from 'vue-toastification'
 
   
+const priorities = ref([])
+const fetchPriorities = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/priority')
+    priorities.value = response.data.data.map(item => ({
+      name: item.priority_name,
+      value: item.id
+    })
 
-const priorities = [
-  { name: 'Low', value: 'low' },
-  { name: 'Medium', value: 'medium' },
-  { name: 'High', value: 'high' }
-]
+  )
+console.log('INI ?>>>>>>>>>>>>>>',priorities)
+
+  } catch (error) {
+    console.error('Error fetching priorities:', error)
+  }
+}
+
+onMounted(() => {
+  fetchPriorities()
+})
 
 const priority = ref<Option>({} as Option)
 
@@ -64,7 +76,7 @@ const onSubmit = async () => {
   if (isLoading.value) return
 
   await create({
-    priority: priority.value?.value,
+    priority_id: priority.value?.value,
     category_id: category.value?.value,
     subject: subject.value,
     description: description.value,
@@ -109,7 +121,6 @@ onBeforeRouteLeave(() => {
             :errors="errors?.priority"
             null-text="Select a priority"
           />
-
           <Autocomplete
             @update="(newCategory) => (category = newCategory)"
             :selected="category"

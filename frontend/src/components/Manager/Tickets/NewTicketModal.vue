@@ -22,6 +22,8 @@ import type User from '@/types/User'
 import type Client from '@/types/Client'
 import type ClientsFilters from '@/types/ClientsFilters'
 import { apiURL } from '@/global'
+import axios from 'axios'
+
 
 const props = defineProps<{
   open: boolean
@@ -33,12 +35,27 @@ const emit = defineEmits<{
   (e: 'success'): void
 }>()
 
-const priorities = [
-  { name: 'Low', value: 'low' },
-  { name: 'Medium', value: 'medium' },
-  { name: 'High', value: 'high' }
-]
 
+const priorities = ref([])
+const fetchPriorities = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/priority')
+    priorities.value = response.data.data.map(item => ({
+      name: item.priority_name,
+      value: item.id
+    })
+
+  )
+console.log('INI ?>>>>>>>>>>>>>>',priorities)
+
+  } catch (error) {
+    console.error('Error fetching priorities:', error)
+  }
+}
+
+onMounted(() => {
+  fetchPriorities()
+})
 const priority = ref({} as Option)
 
 const categories = ref([] as Option[] | any[])
@@ -124,7 +141,7 @@ const reset = () => {
 
 const onSubmit = async () => {
   await create({
-    priority: priority.value?.value,
+    priority_id: priority.value?.value,
     category_id: category.value?.value,
     subject: subject.value,
     description: description.value,
