@@ -40,7 +40,7 @@ Route::middleware(['auth:sanctum'])
         Route::get('sub-department', [SubdepartmentController::class, 'get']);
         Route::get('sub-department/count', [SubdepartmentController::class, 'getcount']);
         Route::post('priority', [PriorityController::class, 'store']);
-        Route::patch('priority/{id}', [PriorityController::class, 'update']);
+        Route::put('priority/{id}', [PriorityController::class, 'update']);
         Route::delete('priority/{id}', [PriorityController::class, 'delete']);
         Route::get('priority', [PriorityController::class, 'get']);
 

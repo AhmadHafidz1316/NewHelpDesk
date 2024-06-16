@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PriorityCreateRequest;
+use App\Http\Requests\PriorityUpdateRequest;
 use App\Models\priority;
 use Illuminate\Http\Request;
 
@@ -26,15 +27,11 @@ class PriorityController extends Controller
         return $this->successResponse('Priorities retrieved successfully', $priorities);
     }
 
-    public function update(Request $request, $id)
+    public function update(PriorityUpdateRequest $request, $id)
     {
         $priority = priority::findOrFail($id);
 
-        $priority->update([
-            'priority_name' => $request->priority_name,
-            'response_time' => $request->response_time,
-            'resolution_time' => $request->resolution_time
-        ]);
+        $priority->update($request->validated());
 
         return $this->successResponse('Priority updated successfully', $priority);
     }
