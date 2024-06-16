@@ -40,6 +40,8 @@ Route::middleware(['auth:sanctum'])
         Route::get('sub-department', [SubdepartmentController::class, 'get']);
         Route::get('sub-department/count', [SubdepartmentController::class, 'getcount']);
         Route::post('priority', [PriorityController::class, 'store']);
+        Route::patch('priority/{id}', [PriorityController::class, 'update']);
+        Route::delete('priority/{id}', [PriorityController::class, 'delete']);
         Route::get('priority', [PriorityController::class, 'get']);
 
         Route::middleware(['can:is-admin'])->group(function () {
@@ -96,8 +98,8 @@ Route::middleware(['auth:sanctum'])
                     Route::put('{id}/restore', 'restore');
                 });
 
-            Route::apiResource('newsletters', NewsletterController::class)
-                ->only(['index', 'update', 'destroy']);
+            // Route::apiResource('newsletters', NewsletterController::class)
+            // ->only(['index', 'update', 'destroy']);
         });
 
         Route::apiResource('users', UserController::class)
@@ -179,4 +181,4 @@ Route::controller(AuthController::class)
             ->name('reset-password');
     });
 
-Route::post('newsletters', [NewsletterController::class, 'store']);
+// Route::post('newsletters', [NewsletterController::class, 'store']);

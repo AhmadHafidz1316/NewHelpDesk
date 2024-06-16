@@ -29,7 +29,7 @@ import QuestionMarkCircleIcon from '@heroicons/vue/24/outline/QuestionMarkCircle
 import BellIcon from '@heroicons/vue/24/outline/BellIcon'
 import ChatBubbleLeftRightIcon from '@heroicons/vue/24/outline/ChatBubbleLeftRightIcon'
 import TicketIcon from '@heroicons/vue/24/outline/TicketIcon'
-import EnvelopeIcon from '@heroicons/vue/24/outline/EnvelopeIcon'
+import EnvelopeIcon from '@heroicons/vue/24/outline/AdjustmentsHorizontalIcon'
 import UserCircleIcon from '@heroicons/vue/24/outline/UserCircleIcon'
 import KeyIcon from '@heroicons/vue/24/outline/KeyIcon'
 
@@ -62,7 +62,8 @@ const adminNavigation = [
   { name: 'Tickets', to: 'DashboardTickets', icon: TicketIcon },
   { name: 'Profile', to: 'DashboardProfile', icon: UserCircleIcon },
   { name: 'Password', to: 'DashboardPassword', icon: KeyIcon },
-  { name: 'Notifications', to: 'DashboardNotifications', icon: BellIcon }
+  { name: 'Notifications', to: 'DashboardNotifications', icon: BellIcon },
+  { name: 'Sla Management', to: 'DashboardNotifications', icon: EnvelopeIcon }
 ]
 
 const agentNavigation = [
