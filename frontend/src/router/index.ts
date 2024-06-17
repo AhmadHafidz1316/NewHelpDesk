@@ -157,6 +157,11 @@ const router = createRouter({
           component: () => import('@/views/Manager/Tickets.vue')
         },
         {
+          path: 'sla',
+          name: 'DashboardSla',
+          component: () => import('@/views/Manager/Sla.vue')
+        },
+        {
           path: 'tickets/:reference',
           name: 'DashboardSingleTicket',
           component: () => import('@/views/Manager/SingleTicket.vue')

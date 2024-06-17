@@ -63,7 +63,7 @@ const adminNavigation = [
   { name: 'Profile', to: 'DashboardProfile', icon: UserCircleIcon },
   { name: 'Password', to: 'DashboardPassword', icon: KeyIcon },
   { name: 'Notifications', to: 'DashboardNotifications', icon: BellIcon },
-  { name: 'Sla Management', to: 'DashboardNotifications', icon: EnvelopeIcon }
+  { name: 'Sla Management', to: 'DashboardSla', icon: EnvelopeIcon }
 ]
 
 const agentNavigation = [

@@ -18,7 +18,7 @@ const onSubmit = async () => {
     subject: subject.value,
     description: description.value,
     attachments: files.value,
-    sla_level: selectedSLA // Add SLA data to the ticket creation payload
+    sla_level: selectedSLA 
   })
 
   if (isSuccess.value) {
