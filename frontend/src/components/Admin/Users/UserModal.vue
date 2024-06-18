@@ -6,15 +6,14 @@ import Autocomplete from '@/components/Forms/Autocomplete.vue'
 import PrimaryButton from '@/components/Forms/PrimaryButton.vue'
 import FormLabel from '@/components/Forms/FormLabel.vue'
 import Errors from '@/components/Forms/Errors.vue'
+import useUsers from '@/composables/users/useUsers'
 
 import type Option from '@/types/Option'
 import type User from '@/types/User'
 
-import useUsers from '@/composables/users/useUsers'
-
-import { ref, computed, watch } from 'vue'
-
+import { ref, computed, watch, onMounted } from 'vue'
 import { useToast } from 'vue-toastification'
+import axios from 'axios'
 
 const props = defineProps<{
   open: boolean
@@ -34,17 +33,27 @@ const password = ref('')
 const role = ref({} as Option)
 const department = ref({} as Option)
 const picture = ref({} as File | null)
+const parentUser = ref({} as Option)
 
 const roles = ref([
   { name: 'Agent', value: 'agent' },
   { name: 'Admin', value: 'admin' }
 ] as Option[])
 
+const teams = ref<Option[]>([
+  { name: 'Team A', value: 'team_a' },
+  { name: 'Team B', value: 'team_b' },
+  { name: 'Team C', value: 'team_c' }
+])
+
+const selectedTeam = ref<Option | null>(null)
+const users = ref<Option[]>([])
+
 const method = computed(() => (props.userToEdit.id ? 'put' : 'post'))
 
 const isAgent = computed(() => role.value?.value === 'agent')
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = 'http://127.0.0.1:8000/api/users' // Ganti dengan URL API yang sesuai
 
 const defaultImagePath = API_URL + 'storage/examples/user.jpg'
 
@@ -87,6 +96,7 @@ const reset = () => {
   password.value = ''
   role.value = {} as Option
   department.value = {} as Option
+  selectedTeam.value = null
   picture.value = {} as File | null
   previewImage.value = defaultImagePath
 }
@@ -95,6 +105,7 @@ const onSubmit = async () => {
   const departmentId = isNaN(Number(department.value?.value))
     ? null
     : Number(department.value?.value)
+  const parentUserId = parentUser.value?.value
 
   await save(
     {
@@ -104,6 +115,7 @@ const onSubmit = async () => {
       password: password.value,
       role: role.value?.value,
       department_id: isAgent.value ? departmentId : null,
+      parent: parentUser.value?.value,
       picture: picture.value
     },
     method.value,
@@ -122,7 +134,24 @@ const onSubmit = async () => {
   } else {
     toast.error(message.value)
   }
+
+  // Log parentUser value to console
+  console.log('Parent User ID:', parentUser.value?.value)
 }
+
+const fetchUsers = async () => {
+  try {
+    const response = await axios.get(API_URL)
+    users.value = response.data.data.map((user: User) => ({
+      name: user.name,
+      value: user.id.toString()
+    }))
+  } catch (error) {
+    toast.error('Failed to load users')
+  }
+}
+
+onMounted(fetchUsers)
 
 watch(
   () => props.userToEdit,
@@ -131,14 +160,16 @@ watch(
       name.value = props.userToEdit.name
       email.value = props.userToEdit.email
       phone.value = props.userToEdit.phone
-      role.value =
-        roles.value.find((role) => role.value === props.userToEdit.role) ?? ({} as Option)
+      role.value = roles.value.find((role) => role.value === props.userToEdit.role) ?? ({} as Option)
       previewImage.value = API_URL + props.userToEdit.picture
+      // Atur nilai parentUser jika ada parentUser yang sudah diatur sebelumnya
+      parent.value = users.value.find(user => user.value === props.userToEdit.parent) ?? null
     } else {
       reset()
     }
   }
 )
+
 
 watch(
   () => props.departments && props.userToEdit,
@@ -233,6 +264,19 @@ watch(
           :options="departments"
           @update="(value) => (department = value)"
           :errors="errors.department_id"
+          :reset="resetInput"
+          @reset="() => (resetInput = false)"
+        />
+
+        <ListBox
+          v-if="isAgent"
+          null-text="Optional"
+          class="w-full"
+          label="Parent User"
+          :selected="parentUser"
+          :options="users"
+          @update="(value) => (parentUser = value)"
+          :errors="errors.parent"
           :reset="resetInput"
           @reset="() => (resetInput = false)"
         />

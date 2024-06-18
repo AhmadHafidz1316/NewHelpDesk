@@ -58,6 +58,9 @@ const restore = async (id: number) => {
     .then(() => (isLoading.value = false))
 }
 
+
+
+
 const destroy = async (id: number, forceDelete = false) => {
   isLoading.value = true
   isSuccess.value = false
@@ -77,8 +80,28 @@ const destroy = async (id: number, forceDelete = false) => {
     .then(() => (isLoading.value = false))
 }
 
+const destroy1 = async (id: number, forceDelete = false) => {
+  isLoading.value = true
+  isSuccess.value = false
+
+  const url = forceDelete ? `/priority/${id}/force-delete` : `/priority/${id}`
+
+  await axios
+    .delete(url)
+    .then((response) => {
+      message.value = response.data.message
+
+      isSuccess.value = true
+    })
+    .catch((error) => {
+      message.value = error.response?.data.message
+    })
+    .then(() => (isLoading.value = false))
+}
+
+
 const useCategories = () => {
-  return { errors, isLoading, isSuccess, message, save, destroy, restore }
+  return { errors, isLoading, isSuccess, message, save, destroy, restore, destroy1 }
 }
 
 export default useCategories
