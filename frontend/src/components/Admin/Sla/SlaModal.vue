@@ -6,12 +6,9 @@ import PrimaryButton from '@/components/Forms/PrimaryButton.vue'
 import type Option from '@/types/Option'
 import type Category from '@/types/Category'
 
-import useCategories from '@/composables/categories/useCategories'
-
 import { ref, computed, watch, onMounted } from 'vue'
-
-import { useToast } from 'vue-toastification'
 import axios from 'axios'
+import { useToast } from 'vue-toastification'
 
 const props = defineProps<{
   open: boolean
@@ -24,16 +21,16 @@ const emit = defineEmits<{
   (e: 'success', keepQuery: boolean): void
 }>()
 
-const name = ref('')
-const slug = ref('')
-const department = ref({} as Option)
+const priority_name = ref('')
+const resolution_time = ref('')
+const response_time = ref('')
 
 const method = computed(() => (props.categoryToEdit.id ? 'put' : 'post'))
 
 const resetInput = ref(false)
 
 const title = computed(() => {
-  return props.categoryToEdit.id ? 'Edit Category' : 'New Priority'
+  return props.categoryToEdit.id ? 'Edit Priority' : 'New Priority'
 })
 
 const buttonText = computed(() => {
@@ -42,110 +39,40 @@ const buttonText = computed(() => {
 
 const toast = useToast()
 
-const { save, isLoading, isSuccess, errors, message } = useCategories()
+const errors = ref({})
 
 const reset = () => {
   resetInput.value = true
-  name.value = ''
-  slug.value = ''
-  department.value = {} as Option
+  priority_name.value = ''
+  resolution_time.value = ''
+  response_time.value = ''
 }
 
 const onSubmit = async () => {
-  try {
-    const departmentId = selectedNode.value?.id || selectedParentNode.value?.id
-    
-    if (!departmentId) {
-      toast.error('Please select a department')
-      return
-    }
+  const payload = {
+    priority_name: priority_name.value,
+    resolution_time: resolution_time.value,
+    response_time: response_time.value,
+  }
 
-    const response = await axios.post('http://127.0.0.1:8000/api/categories', {
-      name: name.value,
-      slug: slug.value,
-      department_id: departmentId
+  try {
+    const response = await axios({
+      method: method.value,
+      url: `http://127.0.0.1:8000/api/priority${method.value === 'put' ? `/${props.categoryToEdit.id}` : ''}`,
+      data: payload,
     })
 
-    // Handle success response
-    if (response.status === 200 && response.data.message === 'Category created successfully') {
-      toast.success(response.data.message)
-      reset()
-
-      if (method.value === 'post') emit('success', false)
-      else emit('success', true)
-
-      emit('close')
-    } else {
-      toast.error('Failed to create category')
-    }
+    toast.success(response.data.message || 'Priority saved successfully')
+    emit('success', true)
+    reset()
   } catch (error) {
-    console.error(error.response)
-    toast.error('An error occurred while creating the category')
-  }
-}
-
-watch(
-  () => props.categoryToEdit,
-  () => {
-    if (props.categoryToEdit.id) {
-      name.value = props.categoryToEdit.name
-      slug.value = props.categoryToEdit.slug
+    if (error.response && error.response.data) {
+      errors.value = error.response.data.errors || {}
+      toast.error(error.response.data.message || 'Failed to save priority')
     } else {
-      reset()
+      toast.error('An unexpected error occurred')
     }
   }
-)
-
-watch(
-  () => props.departments && props.categoryToEdit,
-  () => {
-    if (props.categoryToEdit.id) {
-      department.value =
-        props.departments.find(
-          (department) => department.value === props.categoryToEdit.department?.id.toString()
-        ) ?? ({} as Option)
-    }
-  }
-)
-
-// Fetch departments data from the API and create tree structure
-const treeData = ref([] as any[])
-
-const fetchDepartments = async () => {
-  try {
-    const response = await axios.get('http://127.0.0.1:8000/api/departments')
-    const departments = response.data.data
-
-    const buildTree = (list: any[], parent: number | null) => {
-      return list
-        .filter((item) => item.parent === parent)
-        .map((item) => ({
-          ...item,
-          children: buildTree(list, item.id)
-        }))
-    }
-
-    treeData.value = buildTree(departments, null)
-  } catch (error) {
-    console.error('Error fetching departments:', error)
-  }
-}
-
-onMounted(fetchDepartments)
-
-const selectedParentNode = ref(null as Option | null)
-const selectedNode = ref(null as Option | null)
-const showDropdown = ref(false)
-
-const selectParentNode = (node: Option) => {
-  selectedParentNode.value = node
-  selectedNode.value = null
-}
-
-const selectNode = (node: Option) => {
-  selectedNode.value = node
-  department.value = node
-  showDropdown.value = false
 }
 </script>
 
@@ -159,35 +86,35 @@ const selectNode = (node: Option) => {
           label="Priority Name"
           placeholder="Priority Name"
           type="text"
-          :value="name"
-          @change="(value) => (name = value)"
-          :errors="errors.name"
+          :value="priority_name"
+          @change="(value) => (priority_name = value)"
+          :errors="errors.priority_name"
           :reset="resetInput"
           @reset="() => (resetInput = false)"
         />
 
         <FormInput
           class="w-full"
-          id="slug"
+          id="resolution-time"
           label="Resolution Time"
           placeholder="Resolution Time"
           type="text"
-          :value="slug"
-          @change="(value) => (slug = value)"
-          :errors="errors.slug"
+          :value="resolution_time"
+          @change="(value) => (resolution_time = value)"
+          :errors="errors.resolution_time"
           :reset="resetInput"
           @reset="() => (resetInput = false)"
         />
 
         <FormInput
           class="w-full"
-          id="slug"
+          id="response-time"
           label="Response Time"
           placeholder="Response Time"
           type="text"
-          :value="slug"
-          @change="(value) => (slug = value)"
-          :errors="errors.slug"
+          :value="response_time"
+          @change="(value) => (response_time = value)"
+          :errors="errors.response_time"
           :reset="resetInput"
           @reset="() => (resetInput = false)"
         />

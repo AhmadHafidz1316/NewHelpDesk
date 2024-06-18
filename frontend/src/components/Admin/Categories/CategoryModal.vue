@@ -53,36 +53,43 @@ const reset = () => {
 
 const onSubmit = async () => {
   try {
-    const departmentId = selectedNode.value?.id || selectedParentNode.value?.id
+    const departmentId = selectedNode.value?.id || selectedParentNode.value?.id;
     
     if (!departmentId) {
-      toast.error('Please select a department')
-      return
+      toast.error('Please select a department');
+      return;
     }
 
-    const response = await axios.post('http://127.0.0.1:8000/api/categories', {
+    const payload = {
       name: name.value,
       slug: slug.value,
-      department_id: departmentId
-    })
+      department_id: departmentId,
+    };
+
+    let response;
+
+    if (method.value === 'post') {
+      response = await axios.post('http://127.0.0.1:8000/api/categories', payload);
+    } else {
+      response = await axios.put(`http://127.0.0.1:8000/api/categories/${props.categoryToEdit.id}`, payload);
+    }
 
     // Handle success response
-    if (response.status === 200 && response.data.message === 'Category created successfully') {
-      toast.success(response.data.message)
-      reset()
+    if ((response.status === 200 || response.status === 201) && response.data.message) {
+      toast.success(response.data.message);
+      reset();
 
-      if (method.value === 'post') emit('success', false)
-      else emit('success', true)
-
-      emit('close')
+      emit('success', method.value === 'post' ? false : true);
+      emit('close');
     } else {
-      toast.error('Failed to create category')
+      toast.error('Failed to save category');
     }
   } catch (error) {
-    console.error(error.response)
-    toast.error('An error occurred while creating the category')
+    console.error(error.response);
+    toast.error('An error occurred while saving the category');
   }
 }
+
 
 watch(
   () => props.categoryToEdit,

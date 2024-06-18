@@ -83,12 +83,7 @@ const onSubmit = async () => {
           />
         </div>
 
-        <router-link
-          :to="{ name: 'ForgotPassword' }"
-          class="mt-3 block text-right text-blue-600 hover:text-blue-800"
-        >
-          Forgot password?
-        </router-link>
+      
 
         <button class="mx-auto mt-3 w-full rounded-md bg-blue-500 p-3 text-white">Login</button>
       </form>
