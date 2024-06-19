@@ -120,8 +120,8 @@ const handleEdit = (category: Category) => {
 const handleDelete = (category: Category) => {
   categoryToDelete.value = category
   confirmationModalIsOpen.value = true
-  confirmationModalTitle.value = 'Delete Category'
-  confirmationModalText.value = 'Are you sure you want to delete this category?'
+  confirmationModalTitle.value = 'Delete Priority'
+  confirmationModalText.value = 'Are you sure you want to delete this priority?'
   confirmationModalButtonText.value = 'Delete'
   confirmationModalBackgroundColor.value = 'bg-red-100'
   confirmationModalButtonBackgroundColor.value = 'bg-red-600 hover:bg-red-700 focus:ring-red-500'
