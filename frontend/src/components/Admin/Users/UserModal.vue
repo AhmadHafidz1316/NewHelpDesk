@@ -2,7 +2,6 @@
 import Modal from '@/components/Common/Modal.vue'
 import FormInput from '@/components/Forms/FormInput.vue'
 import ListBox from '@/components/Forms/ListBox.vue'
-import Autocomplete from '@/components/Forms/Autocomplete.vue'
 import PrimaryButton from '@/components/Forms/PrimaryButton.vue'
 import FormLabel from '@/components/Forms/FormLabel.vue'
 import Errors from '@/components/Forms/Errors.vue'
@@ -40,13 +39,6 @@ const roles = ref([
   { name: 'Admin', value: 'admin' }
 ] as Option[])
 
-const teams = ref<Option[]>([
-  { name: 'Team A', value: 'team_a' },
-  { name: 'Team B', value: 'team_b' },
-  { name: 'Team C', value: 'team_c' }
-])
-
-const selectedTeam = ref<Option | null>(null)
 const users = ref<Option[]>([])
 
 const method = computed(() => (props.userToEdit.id ? 'put' : 'post'))
@@ -96,16 +88,17 @@ const reset = () => {
   password.value = ''
   role.value = {} as Option
   department.value = {} as Option
-  selectedTeam.value = null
   picture.value = {} as File | null
   previewImage.value = defaultImagePath
 }
 
 const onSubmit = async () => {
-  const departmentId = isNaN(Number(department.value?.value))
-    ? null
-    : Number(department.value?.value)
-  const parentUserId = parentUser.value?.value
+  const departmentId = selectedNode.value?.id || selectedParentNode.value?.id
+
+  if (!departmentId) {
+    toast.error('Please select a department')
+    return
+  }
 
   await save(
     {
@@ -135,7 +128,9 @@ const onSubmit = async () => {
     toast.error(message.value)
   }
 
-  // Log parentUser value to console
+  // Log departmentId value to console
+  console.log('Department ID:', departmentId)
+  
   console.log('Parent User ID:', parentUser.value?.value)
 }
 
@@ -162,14 +157,12 @@ watch(
       phone.value = props.userToEdit.phone
       role.value = roles.value.find((role) => role.value === props.userToEdit.role) ?? ({} as Option)
       previewImage.value = API_URL + props.userToEdit.picture
-      // Atur nilai parentUser jika ada parentUser yang sudah diatur sebelumnya
-      parent.value = users.value.find(user => user.value === props.userToEdit.parent) ?? null
+      parentUser.value = users.value.find(user => user.value === props.userToEdit.parent) ?? null
     } else {
       reset()
     }
   }
 )
-
 
 watch(
   () => props.departments && props.userToEdit,
@@ -182,6 +175,45 @@ watch(
     }
   }
 )
+
+const treeData = ref([] as any[])
+
+const fetchDepartments = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/departments')
+    const departments = response.data.data
+
+    const buildTree = (list: any[], parent: number | null) => {
+      return list
+        .filter((item) => item.parent === parent)
+        .map((item) => ({
+          ...item,
+          children: buildTree(list, item.id)
+        }))
+    }
+
+    treeData.value = buildTree(departments, null)
+  } catch (error) {
+    console.error('Error fetching departments:', error)
+  }
+}
+
+onMounted(fetchDepartments)
+
+const selectedParentNode = ref(null as Option | null)
+const selectedNode = ref(null as Option | null)
+const showDropdown = ref(false)
+
+const selectParentNode = (node: Option) => {
+  selectedParentNode.value = node
+  selectedNode.value = null
+}
+
+const selectNode = (node: Option) => {
+  selectedNode.value = node
+  department.value = node
+  showDropdown.value = false
+}
 </script>
 
 <template>
@@ -255,18 +287,77 @@ watch(
           @reset="() => (resetInput = false)"
         />
 
-        <Autocomplete
-          v-if="isAgent"
-          null-text="Select a department"
-          class="w-full"
-          label="Department"
-          :selected="department"
-          :options="departments"
-          @update="(value) => (department = value)"
-          :errors="errors.department_id"
-          :reset="resetInput"
-          @reset="() => (resetInput = false)"
-        />
+        <div class="relative w-full">
+          <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
+          <div class="mt-1">
+            <input
+              v-if="isAgent"
+              placeholder="Select Department"
+              type="text"
+              id="department"
+              class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              :value="selectedNode?.name || selectedParentNode?.name || ''"
+              readonly
+              @click="showDropdown = !showDropdown"
+            />
+          </div>
+          <div
+            v-if="showDropdown"
+            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-white shadow-lg"
+          >
+            <ul>
+              <li v-for="node in treeData" :key="node.id">
+                <div
+                  @click="selectParentNode(node)"
+                  :class="{ 'font-bold': selectedParentNode?.id === node.id }"
+                  class="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                >
+                  {{ node.name }}
+                </div>
+                <ul
+                  v-if="selectedParentNode?.id === node.id && node.children && node.children.length"
+                  class="pl-4"
+                >
+                  <li v-for="child in node.children" :key="child.id">
+                    <div
+                      @click="selectNode(child)"
+                      :class="{ 'font-bold': selectedNode?.id === child.id }"
+                      class="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                    >
+                      {{ child.name }}
+                    </div>
+                    <ul v-if="child.children && child.children.length" class="pl-4">
+                      <li v-for="grandchild in child.children" :key="grandchild.id">
+                        <div
+                          @click="selectNode(grandchild)"
+                          :class="{ 'font-bold': selectedNode?.id === grandchild.id }"
+                          class="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                        >
+                          {{ grandchild.name }}
+                        </div>
+                        <ul v-if="grandchild.children && grandchild.children.length" class="pl-4">
+                          <li
+                            v-for="greatgrandchild in grandchild.children"
+                            :key="greatgrandchild.id"
+                          >
+                            <div
+                              @click="selectNode(greatgrandchild)"
+                              :class="{ 'font-bold': selectedNode?.id === greatgrandchild.id }"
+                              class="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                            >
+                              {{ greatgrandchild.name }}
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
 
         <ListBox
           v-if="isAgent"

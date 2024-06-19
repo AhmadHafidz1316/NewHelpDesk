@@ -96,11 +96,6 @@ onMounted(async () => {
       <Clients :clients="clientsStats" />
     </div>
 
-    <div class="rounded-lg border p-4 shadow" v-if="isAdmin">
-      <p>Agents Response Time</p>
-      <AgentsResponseTime :agents-response-time="agentsResponseTime" />
-    </div>
-
     <div class="rounded-lg border p-4 shadow">
       <p>Tickets by Status</p>
       <TicketsCountsByStatus :tickets-counts-by-status="ticketsCountsByStatus" />
@@ -111,11 +106,5 @@ onMounted(async () => {
       <TicketsCountsByCategory :tickets-counts-by-category="ticketsCountsByCategory" />
     </div>
 
-    <div class="rounded-lg border p-4 shadow" v-if="isAdmin">
-      <p>Agents Tickets By Priority</p>
-      <AgentsTicketsByPriority
-        :tickets-counts-by-agent-and-priority="ticketsCountsByAgentAndPriority"
-      />
-    </div>
   </div>
 </template>
