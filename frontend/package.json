@@ -14,6 +14,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.11",
     "@heroicons/vue": "^2.0.16",
+    "@syncfusion/ej2-vue-treegrid": "^26.1.35",
     "@vuepic/vue-datepicker": "^4.1.0",
     "@vueup/vue-quill": "^1.1.0",
     "@vueuse/core": "^9.13.0",
@@ -26,6 +27,7 @@
     "floating-vue": "^2.0.0-beta.20",
     "pinia": "^2.0.32",
     "pinia-plugin-persistedstate": "^3.1.0",
+    "primevue": "^4.0.0-rc.2",
     "unhead": "^1.1.11",
     "vue": "^3.2.47",
     "vue-filepond": "^7.0.3",
@@ -34,7 +36,8 @@
     "vue-treeselect": "^1.0.7",
     "vue3-apexcharts": "^1.4.1",
     "vue3-lottie": "^2.5.0",
-    "vue3-treeselect": "^0.1.10"
+    "vue3-treeselect": "^0.1.10",
+    "vuetify": "^3.6.0-beta.0.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

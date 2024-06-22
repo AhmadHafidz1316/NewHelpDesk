@@ -49,6 +49,9 @@ const reset = () => {
   name.value = ''
   slug.value = ''
   department.value = {} as Option
+  selectedParentNode.value = null
+  selectedNode.value = null
+  selectedPath.value = []
 }
 
 const onSubmit = async () => {
@@ -89,7 +92,6 @@ const onSubmit = async () => {
     toast.error('An error occurred while saving the category');
   }
 }
-
 
 watch(
   () => props.categoryToEdit,
@@ -142,17 +144,36 @@ onMounted(fetchDepartments)
 
 const selectedParentNode = ref(null as Option | null)
 const selectedNode = ref(null as Option | null)
+const selectedPath = ref([] as string[])
 const showDropdown = ref(false)
 
 const selectParentNode = (node: Option) => {
   selectedParentNode.value = node
   selectedNode.value = null
+  selectedPath.value = [node.name]
 }
 
 const selectNode = (node: Option) => {
   selectedNode.value = node
   department.value = node
   showDropdown.value = false
+
+  if (selectedParentNode.value) {
+    selectedPath.value = [selectedParentNode.value.name, node.name]
+  } else {
+    selectedPath.value = [node.name]
+  }
+}
+
+const selectChildNode = (node: Option, parent: Option) => {
+  selectedNode.value = node
+  showDropdown.value = false
+
+  if (selectedParentNode.value) {
+    selectedPath.value = [selectedParentNode.value.name, parent.name, node.name]
+  } else {
+    selectedPath.value = [parent.name, node.name]
+  }
 }
 </script>
 
@@ -194,7 +215,7 @@ const selectNode = (node: Option) => {
               type="text"
               id="department"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              :value="selectedNode?.name || selectedParentNode?.name || ''"
+              :value="selectedPath.join(' / ')"
               readonly
               @click="showDropdown = !showDropdown"
             />
@@ -227,7 +248,7 @@ const selectNode = (node: Option) => {
                     <ul v-if="child.children && child.children.length" class="pl-4">
                       <li v-for="grandchild in child.children" :key="grandchild.id">
                         <div
-                          @click="selectNode(grandchild)"
+                          @click="selectChildNode(grandchild, child)"
                           :class="{ 'font-bold': selectedNode?.id === grandchild.id }"
                           class="cursor-pointer px-4 py-2 hover:bg-gray-100"
                         >
@@ -239,7 +260,7 @@ const selectNode = (node: Option) => {
                             :key="greatgrandchild.id"
                           >
                             <div
-                              @click="selectNode(greatgrandchild)"
+                              @click="selectChildNode(greatgrandchild, grandchild)"
                               :class="{ 'font-bold': selectedNode?.id === greatgrandchild.id }"
                               class="cursor-pointer px-4 py-2 hover:bg-gray-100"
                             >

@@ -32,35 +32,19 @@ import { ref, onMounted, watch, computed } from 'vue'
 import type Department from '@/types/Department'
 import type DepartmentsFilters from '@/types/DepartmentsFilters'
 
-import { debounce, values } from 'lodash'
+import { debounce } from 'lodash'
 
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 
 import { useToast } from 'vue-toastification'
-import axios from 'axios'
 
 useHead({ title: `Departments | ${appTitle}` })
-let count:any = [];
-axios
-.get('sub-department/count').then((value) => {
-console.log(value.data.data)
-value.data.data.map((data:any) => {
-console.log('data',data)
-count.push(data.subdepartment_count)
-}
-)
-
-console.log('sssss',count);
-
-}
-).catch((err) => console.log(err))
-
 
 const { setTitle } = useDashboard()
 
 setTitle('Departments')
 
-const headers = ['Department','subDepartment', 'Agents', 'Categories', 'Created At', '']
+const headers = ['Department', 'Agents', 'Categories', 'Created At', '']
 
 const route = useRoute()
 
@@ -248,6 +232,50 @@ const subDepartmentModalIsOpen = ref(false)
 const handleAddSubDepartment = () => {
   subDepartmentModalIsOpen.value = true
 }
+
+const handleClickDepartment = (department: Department) => {
+  if (selectedDepartment.value === department) {
+    selectedDepartment.value = null // Toggle selection
+  } else {
+    selectedDepartment.value = department
+  }
+}
+
+const selectedDepartment = ref(null as Department | null)
+
+// Filter the departments to separate parents and children
+const parentDepartments = computed(() => {
+  return departments.value?.data?.filter((dept: Department) => dept.parent === null) || []
+})
+
+const childDepartments = computed(() => {
+  return departments.value?.data?.filter((dept: Department) => dept.parent !== null) || []
+})
+
+const getNestedChildren = (parent: Department, allDepartments: Department[]) => {
+  const children = allDepartments.filter((dept) => dept.parent === parent.id)
+  return children.map((child) => ({
+    ...child,
+    children: getNestedChildren(child, allDepartments)
+  }))
+}
+
+const totalAgents = computed(() => {
+  let total = 0
+
+  function countAgents(departments) {
+    departments.forEach((dept) => {
+      total += dept.agents_count || 0 // Tambahkan jumlah agen dari departemen saat ini
+      if (dept.children) {
+        countAgents(dept.children) // Rekursif hitung agen dari anak-anak departemen
+      }
+    })
+  }
+
+  countAgents(departments.value.data || [])
+
+  return total
+})
 </script>
 
 <template>
@@ -312,28 +340,86 @@ const handleAddSubDepartment = () => {
   <TableSkeleton v-if="isLoading" />
 
   <NotFoundResults
-    v-else-if="!isLoading && !departments.data?.length && filtersAreApplied"
+    v-else-if="!isLoading && !departments.value?.data?.length && filtersAreApplied"
     text="No departments related to your search"
   />
 
   <TableCard :headers="headers" v-else>
     <template v-slot:default>
-      <template v-if="departments.data?.length">
-        <tr v-for="(department,index) in departments.data"  :key="department.id">
-          <TableTd>
-            {{ department.name }}
+      <template v-if="parentDepartments.length">
+        <tr v-for="(department, index) in parentDepartments" :key="department.id">
+          <TableTd @click="handleClickDepartment(department)">
+            <div class="flex items-center">
+              <span>{{ department.name }}</span>
+            </div>
+
+            <div
+              class="ml-4 mt-1"
+              v-for="child in getNestedChildren(department, departments.data)"
+              :key="child.id"
+            >
+              <div class="flex items-center">
+                > <span class="ml-4">{{ child.name }}</span>
+              </div>
+              <div class="ml-4 mt-1" v-for="grandchild in child.children" :key="grandchild.id">
+                <div class="flex items-center">
+                  > <span class="ml-8">{{ grandchild.name }}</span>
+                </div>
+                <div
+                  class="ml-4 mt-1"
+                  v-for="greatGrandchild in grandchild.children"
+                  :key="greatGrandchild.id"
+                >
+                  <div class="flex items-center">
+                    > <span class="ml-12">{{ greatGrandchild.name }}</span>
+                  </div>
+                  <!-- Tambahkan lebih banyak tingkatan jika perlu -->
+                </div>
+              </div>
+            </div>
           </TableTd>
           <TableTd>
-            <!-- {{ Subdepartments }} -->
-              {{  count[index]}}
+            <template v-if="parentDepartments.length">
+              <div v-if="department.agents_count" class="ml-1 mt-10">
+                {{ department.agents_count }} Agent
+              </div>
+              <template v-for="child in getNestedChildren(department, departments.data)">
+                <div v-if="child.agents_count" class="ml-6 mt-2">{{ child.agents_count }} Agent</div>
+                <template v-for="grandchild in child.children">
+                  <div v-if="grandchild.agents_count" class="ml-9 mt-2">
+                    {{ grandchild.agents_count }} Agent
+                  </div>
+                  <template v-for="greatGrandchild in grandchild.children">
+                    <div v-if="greatGrandchild.agents_count" class="ml-12 mt-1">
+                      {{ greatGrandchild.agents_count }} Agent
+                    </div>
+                  </template>
+                </template>
+              </template>
+            </template>
           </TableTd>
 
           <TableTd>
-            {{ department.agents_count }}
-          </TableTd>
-
-          <TableTd>
-            {{ department.categories_count }}
+            <template v-if="parentDepartments.length">
+              <div v-if="department.categories_count" class="ml-1 mt-10">
+                {{ department.categories_count }} Category
+              </div>
+              <template v-for="child in getNestedChildren(department, departments.data)">
+                <div v-if="child.categories_count" lass="ml-6 mt-2">
+                  {{ child.categories_count }} Category
+                </div>
+                <template v-for="grandchild in child.children">
+                  <div v-if="grandchild.categories_count" class="ml-9 mt-2">
+                    {{ grandchild.categories_count }} Category
+                  </div>
+                  <template v-for="greatGrandchild in grandchild.children">
+                    <div v-if="greatGrandchild.categories_count" class="ml-12 mt-1">
+                      {{ greatGrandchild.categories_count }} Category
+                    </div>
+                  </template>
+                </template>
+              </template>
+            </template>
           </TableTd>
 
           <TableTd>
