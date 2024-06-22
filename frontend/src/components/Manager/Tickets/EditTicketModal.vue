@@ -11,7 +11,7 @@ import type Option from '@/types/Option'
 import type Ticket from '@/types/Ticket'
 
 import { ref, onMounted, watch } from 'vue'
-
+import axios from 'axios'
 import { useToast } from 'vue-toastification'
 
 const props = defineProps<{
@@ -25,23 +25,30 @@ const emit = defineEmits<{
   (e: 'success'): void
 }>()
 
-const priorities = [
-  { name: 'Low', value: 'low' },
-  { name: 'Medium', value: 'medium' },
-  { name: 'High', value: 'high' }
-]
-
+const priorities = ref([] as Option[])
 const priority = ref({} as Option)
-
 const categories = ref([] as Option[])
-
 const category = ref({} as Option)
+
+const fetchPriorities = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/priority')
+    priorities.value = response.data.data.map((priority: any) => ({
+      name: priority.priority_name,
+      value: priority.id.toString()
+    }))
+  } catch (error) {
+    console.error('Error fetching priorities:', error)
+  }
+}
+
+onMounted(fetchPriorities)
 
 watch(
   () => props.ticketToEdit,
   (newTicket) => {
     if (newTicket) {
-      priority.value = priorities.find(
+      priority.value = priorities.value.find(
         (priority) => priority.value === newTicket.priority
       ) as Option
 
@@ -78,7 +85,7 @@ const reset = () => {
 const onSubmit = async () => {
   await update(
     {
-      priority: priority.value?.value,
+      priority_id: priority.value?.value,
       category_id: isNaN(+category.value?.value) ? null : +category.value?.value
     },
     props.ticketToEdit.id

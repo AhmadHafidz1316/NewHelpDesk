@@ -24,9 +24,21 @@ import 'floating-vue/dist/style.css'
 import Vue3Lottie from 'vue3-lottie'
 import 'vue3-lottie/dist/style.css'
 
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
 import './assets/style.css'
 
+
+
 createHead()
+
+const vuetify = createVuetify({
+  components,
+  directives,
+})
 
 const app = createApp(App)
 
@@ -65,5 +77,7 @@ app.use(FloatingVue, {
 })
 
 app.use(Vue3Lottie, { name: 'LottieAnimation' })
+
+app.use(vuetify)
 
 app.mount('#app')

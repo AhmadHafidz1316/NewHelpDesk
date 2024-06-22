@@ -94,12 +94,10 @@ watch(
 axios
   .get('http://127.0.0.1:8000/api/departments')
   .then((response) => {
-    console.log('Response data:', response.data.data[0].name);
     const departmentNamesArray: any[] = []; 
 
     response.data.data.forEach((department: { name: any }) => {
       departmentNamesArray.push(department.name); 
-      console.log(department.name);
     });
 
     departmentNames.value = departmentNamesArray; 
